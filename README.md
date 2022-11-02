@@ -27,18 +27,20 @@ We are developing **_UniBuddy_** which would serve as a one stop solution of nec
 
 ## User Requirements
 
-User:
+**User:**
 
 - Signup
 - Create Profile
-- Add preferences like City, DOB, food preference etc. for other users to find the perfect roommate
+- Add preferences like City, food preference, course, apartment type etc. for other users to find the perfect roommate
 - Users can send connection request
 - User will be able to check their current connections
 - Create a new listing for subletting an apartment or for temporary accommodations.
 - Create a new listing for finding roommates, this will include the user selected preferences.
 - View listing of people trying to find roommates
-- View listing of people trying to sublet / temp
-  Functional:
+- View listing of people trying to sublet
+
+**Functional:**
+
 - Listing based on timestamp
 - Listing based on filters
 - Segregated listing for people and apartments
