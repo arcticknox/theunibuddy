@@ -23,7 +23,7 @@ Attending a foriegn university can get challenging for new international student
 6. Banking options
 7. Etc.
 
-We are developing **_UniBuddy_** which would serve as a one stop solution of necessary resources for prospective students. These resources will not help students with onboarding but will also help in making them comfortable until they become completely independent.
+We are developing **_UniBuddy_** which would serve as a one stop solution of necessary resources for prospective students. These resources will not only help students with onboarding but will also help in making them comfortable until they become completely independent.
 
 ## User Requirements
 
