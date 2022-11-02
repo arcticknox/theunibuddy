@@ -19,3 +19,7 @@ Attending a foriegn university can get challenging for new international student
 6. Etc.
 
 We are developing ***UniBuddy*** which would serve as a one stop solution of necessary resources for prospective students. These resources will not help students with onboarding but will also help in making them comfortable until they become completely independent.
+
+
+## Domain Model
+![Domain Model](./assets/domain_model.png)
