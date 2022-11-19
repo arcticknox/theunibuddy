@@ -1,0 +1,33 @@
+{
+	"name": "final-project-console-log-final-project",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "Final Project Repository",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/neu-mis-info6150-fall-2022/final-project-console-log-final-project.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/neu-mis-info6150-fall-2022/final-project-console-log-final-project/issues"
+	},
+	"homepage": "https://github.com/neu-mis-info6150-fall-2022/final-project-console-log-final-project#readme",
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"cors": "^2.8.5",
+		"express": "^4.18.2",
+		"http-status": "^1.5.3",
+		"jsonwebtoken": "^8.5.1",
+		"lodash": "^4.17.21",
+		"moment": "^2.29.4",
+		"mongoose": "^6.7.2",
+		"passport": "^0.6.0",
+		"passport-jwt": "^4.0.0"
+	}
+}
