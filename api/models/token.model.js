@@ -15,6 +15,7 @@ const tokenSchema = mongoose.Schema(
 		type: {
 			type: String,
 			required: true,
+			enum: ['access', 'refresh'],
 		},
 		expires: {
 			type: Date,
@@ -23,6 +24,7 @@ const tokenSchema = mongoose.Schema(
 	},
 	{
 		timestamps: true,
+		versionKey: false,
 	}
 );
 
