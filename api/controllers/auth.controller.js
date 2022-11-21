@@ -1,3 +1,4 @@
+import httpStatus from 'http-status';
 import AuthService from '../services/auth.service.js';
 import TokenService from '../services/token.service.js';
 import UserService from '../services/user.service.js';
@@ -29,7 +30,7 @@ const logout = async (req, res) => {
 		body: { refreshToken },
 	} = req;
 	await AuthService.logout(refreshToken).catch((err) => {
-		responseHandler(res, {}, err);
+		responseHandler(res, err, httpStatus.BAD_REQUEST);
 	});
 	responseHandler(res, 'Successfuly logged out.');
 };

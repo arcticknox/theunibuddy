@@ -14,7 +14,7 @@ const requestValidatorMiddleware = (schema) => (req, res, next) => {
 	const { value, error } = Joi.compile(reqSchema).validate(requestObject);
 	if (error) {
 		const message = error.details.map((detail) => detail.message);
-		return next(responseHandler(res, null, message, httpStatus[400]));
+		return next(responseHandler(res, message, httpStatus.BAD_REQUEST));
 	}
 	Object.assign(req, value); // Replace with validated object
 	return next();
