@@ -9,21 +9,23 @@ import convict from 'convict';
 import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-
+/**
+ * Load Configurations
+ */
 function loadConfigurations() {
-    const config = {};
-    const files = fs.readdirSync(path.resolve(__dirname, './configs'));
-    _.forEach(files, (file) => {
-        const fileConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, `./configs/${file}`), 'utf-8'))
-        config[_.chain(file).split('.').first().value()] = fileConfig;
-    });
-    return config;
+  const config = {};
+  const files = fs.readdirSync(path.resolve(__dirname, './configs'));
+  _.forEach(files, (file) => {
+    const fileConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, `./configs/${file}`), 'utf-8'));
+    config[_.chain(file).split('.').first().value()] = fileConfig;
+  });
+  return config;
 }
 
 const conf = convict(loadConfigurations());
