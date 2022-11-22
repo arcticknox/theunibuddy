@@ -28,6 +28,7 @@
 		"lodash": "^4.17.21",
 		"moment": "^2.29.4",
 		"mongoose": "^6.7.2",
+		"morgan": "^1.10.0",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.0"
 	}
