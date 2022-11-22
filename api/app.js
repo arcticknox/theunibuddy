@@ -1,17 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import routes from './routes/index.js';
 import passport from 'passport';
+import morgan from 'morgan';
+import routes from './routes/index.js';
 import jwtStrategy from './utils/jwtStrategy.js';
 import errorHandlerMiddleware from './middlewares/error.middlware.js';
-import morgan from 'morgan';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // Parse json
 app.use(express.urlencoded({
-    extended: true
+  extended: true,
 }));
 // create "middleware"
 app.use(morgan('combined'));

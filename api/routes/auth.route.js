@@ -7,26 +7,26 @@ import authValidations from '../validations/auth.validations.js';
 const router = express.Router();
 
 router.post(
-	'/register',
-	requestValidatorMiddleware(authValidations.register),
-	authController.register
+    '/register',
+    requestValidatorMiddleware(authValidations.register),
+    authController.register,
 );
 router.post(
-	'/login',
-	requestValidatorMiddleware(authValidations.login),
-	authController.loginWithEmail
+    '/login',
+    requestValidatorMiddleware(authValidations.login),
+    authController.loginWithEmail,
 );
 router.post(
-	'/logout',
-	requestValidatorMiddleware(authValidations.logout),
-	authMiddleware(),
-	authController.logout
+    '/logout',
+    requestValidatorMiddleware(authValidations.logout),
+    authMiddleware(),
+    authController.logout,
 );
 router.post(
-	'/refresh-tokens',
-	requestValidatorMiddleware(authValidations.refreshTokens),
-	authMiddleware(),
-	authController.refreshTokens
+    '/refresh-tokens',
+    requestValidatorMiddleware(authValidations.refreshTokens),
+    authMiddleware(),
+    authController.refreshTokens,
 );
 
 export default router;

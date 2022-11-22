@@ -14,13 +14,13 @@ import AppError from '../utils/AppError.js';
  * @returns
  */
 const generateJWT = (userId, expires, type, secret = 'supersecret') => {
-	const payload = {
-		sub: userId,
-		iat: moment().unix(),
-		exp: expires.unix(),
-		type,
-	};
-	return jwt.sign(payload, secret);
+  const payload = {
+    sub: userId,
+    iat: moment().unix(),
+    exp: expires.unix(),
+    type,
+  };
+  return jwt.sign(payload, secret);
 };
 
 /**
@@ -32,13 +32,13 @@ const generateJWT = (userId, expires, type, secret = 'supersecret') => {
  * @returns
  */
 const saveToken = async (token, userId, expires, type) => {
-	const tokenDoc = await TokenModel.create({
-		token,
-		user: userId,
-		expires: expires.toDate(),
-		type,
-	});
-	return tokenDoc;
+  const tokenDoc = await TokenModel.create({
+    token,
+    user: userId,
+    expires: expires.toDate(),
+    type,
+  });
+  return tokenDoc;
 };
 
 /**
@@ -48,47 +48,47 @@ const saveToken = async (token, userId, expires, type) => {
  * @returns
  */
 const verifyToken = async (token, type) => {
-	const payload = jwt.verify(token, 'supersecret');
-	const tokenDoc = await TokenModel.findOne({
-		token,
-		type,
-		user: payload.sub,
-	});
-	if (!tokenDoc) {
-		throw new AppError(httpStatus.UNAUTHORIZED);
-	}
-	return tokenDoc;
+  const payload = jwt.verify(token, 'supersecret');
+  const tokenDoc = await TokenModel.findOne({
+    token,
+    type,
+    user: payload.sub,
+  });
+  if (!tokenDoc) {
+    throw new AppError(httpStatus.UNAUTHORIZED);
+  }
+  return tokenDoc;
 };
 
 /**
  * Generate access and refresh tokens
  * @param {String} userId
- * @returns
+ * @return
  * TODO: Get expiry from config
  */
 const generateAuthTokens = async (userId) => {
-	const accessTokenExpires = moment().add(720, 'minutes');
-	const accessToken = generateJWT(userId, accessTokenExpires, 'access');
+  const accessTokenExpires = moment().add(720, 'minutes');
+  const accessToken = generateJWT(userId, accessTokenExpires, 'access');
 
-	const refreshTokenExpires = moment().add(7, 'days');
-	const refreshToken = generateJWT(userId, refreshTokenExpires, 'refresh');
-	await saveToken(refreshToken, userId, refreshTokenExpires, 'refresh');
+  const refreshTokenExpires = moment().add(7, 'days');
+  const refreshToken = generateJWT(userId, refreshTokenExpires, 'refresh');
+  await saveToken(refreshToken, userId, refreshTokenExpires, 'refresh');
 
-	return {
-		access: {
-			token: accessToken,
-			expires: accessTokenExpires.toDate(),
-		},
-		refresh: {
-			token: refreshToken,
-			expires: refreshTokenExpires.toDate(),
-		},
-	};
+  return {
+    access: {
+      token: accessToken,
+      expires: accessTokenExpires.toDate(),
+    },
+    refresh: {
+      token: refreshToken,
+      expires: refreshTokenExpires.toDate(),
+    },
+  };
 };
 
 export default {
-	generateJWT,
-	saveToken,
-	verifyToken,
-	generateAuthTokens,
+  generateJWT,
+  saveToken,
+  verifyToken,
+  generateAuthTokens,
 };

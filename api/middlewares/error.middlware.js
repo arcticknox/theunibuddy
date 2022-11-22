@@ -10,9 +10,9 @@
  * @returns
  */
 const errorHandlerMiddleware = (error, req, res, next) => {
-	const { code, message } = error;
-	if (!code) return next(error); // Propagate to central error handler
-	res.status(code).send({ success: false, message });
+  const {code, message} = error;
+  if (!code) return next(error); // Propagate to central error handler
+  res.status(code).send({success: false, message});
 };
 
 export default errorHandlerMiddleware;

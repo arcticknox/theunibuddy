@@ -7,14 +7,13 @@ import AppError from '../utils/AppError.js';
  * @param {Object} userInfo
  */
 const createUser = async (userInfo) => {
-	const { email } = userInfo;
-	const isEmailTaken = await UserModel.isEmailTaken(email);
-	if (isEmailTaken)
-		throw new AppError(httpStatus.BAD_REQUEST, 'Email already taken');
-	const user = await UserModel.create(userInfo);
-	return user;
+  const {email} = userInfo;
+  const isEmailTaken = await UserModel.isEmailTaken(email);
+  if (isEmailTaken) throw new AppError(httpStatus.BAD_REQUEST, 'Email already taken');
+  const user = await UserModel.create(userInfo);
+  return user;
 };
 
 export default {
-	createUser,
+  createUser,
 };

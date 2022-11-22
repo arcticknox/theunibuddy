@@ -6,9 +6,9 @@
  * @param {Object} res
  */
 const centralErrorHandler = (error, res) => {
-	// TODO: Log to file
-	console.error('ErrorHandler: ', error);
-	res.status(500).send({ success: false });
+  // TODO: Log to file
+  console.error('ErrorHandler: ', error);
+  res.status(500).send({success: false});
 };
 
 export default centralErrorHandler;
