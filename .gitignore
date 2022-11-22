@@ -36,3 +36,9 @@ node_modules/
 .eslintcache
 
 dist
+
+# environment variable file
+.env
+
+# local deployment config file
+config/deployment.json

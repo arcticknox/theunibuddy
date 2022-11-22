@@ -1,12 +1,11 @@
+import config from './config/index.js';
 import mongoose from 'mongoose';
 import app from './api/app.js';
 import centralErrorHandler from './api/utils/centralErrorHandler.js';
 
-const port = 8080;
-
 const initMongoConn = () => {
 	mongoose
-		.connect('mongodb://localhost:27017/testdb')
+		.connect(`mongodb://${config.mongodb.url}/${config.mongodb.dbName}`)
 		.then(() => {
 			console.info('MongoDB connected.');
 		})
@@ -15,9 +14,9 @@ const initMongoConn = () => {
 		});
 };
 
-app.listen(port, () => {
+app.listen(config.app.port, () => {
 	initMongoConn();
-	console.log('Server listening on port', port);
+	console.log('Server listening on port', config.app.port);
 });
 
 // Centralized error handler

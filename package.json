@@ -6,7 +6,7 @@
 	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node server.js"
+		"start": "node -r dotenv/config server.js"
 	},
 	"repository": {
 		"type": "git",
@@ -20,7 +20,9 @@
 	"homepage": "https://github.com/neu-mis-info6150-fall-2022/final-project-console-log-final-project#readme",
 	"dependencies": {
 		"bcrypt": "^5.1.0",
+		"convict": "^6.2.3",
 		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
 		"http-status": "^1.5.3",
 		"joi": "^17.7.0",
