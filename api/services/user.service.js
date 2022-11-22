@@ -1,5 +1,6 @@
 import httpStatus from 'http-status';
 import UserModel from '../models/user.model.js';
+import AppError from '../utils/AppError.js';
 
 /**
  * Create user
@@ -9,7 +10,7 @@ const createUser = async (userInfo) => {
 	const { email } = userInfo;
 	const isEmailTaken = await UserModel.isEmailTaken(email);
 	if (isEmailTaken)
-		throw new Error(httpStatus.BAD_REQUEST, 'Email already taken');
+		throw new AppError(httpStatus.BAD_REQUEST, 'Email already taken');
 	const user = await UserModel.create(userInfo);
 	return user;
 };

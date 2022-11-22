@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import _ from 'lodash';
 import TokenModel from '../models/token.model.js';
 import TokenService from './token.service.js';
+import AppError from '../utils/AppError.js';
 
 /**
  * Check user sent password with saved password
@@ -28,7 +29,7 @@ const loginWithEmail = async (email, password) => {
 		_.get(user, 'password')
 	);
 	if (!user || !passwordMatch)
-		throw new Error(
+		throw new AppError(
 			httpStatus.UNAUTHORIZED,
 			'Incorrect email or password. Please check and try again.'
 		);
@@ -44,7 +45,7 @@ const logout = async (refreshToken) => {
 		token: refreshToken,
 		type: 'refresh',
 	});
-	if (!refreshTokenDoc) throw new Error(httpStatus.NOT_FOUND, 'Not found');
+	if (!refreshTokenDoc) throw new AppError(httpStatus.NOT_FOUND, 'Not found');
 	await refreshTokenDoc.remove();
 };
 
@@ -61,13 +62,13 @@ const refreshAuthToken = async (refreshToken) => {
 		);
 		const user = await UserModel.findOne({ _id: refreshTokenDoc.user._id });
 		if (!user) {
-			throw new Error();
+			throw new AppError(httpStatus.UNAUTHORIZED);
 		}
 		await refreshTokenDoc.remove();
 		return TokenService.generateAuthTokens(user);
 	} catch (error) {
 		console.log(error);
-		throw new Error(httpStatus.UNAUTHORIZED, 'Please authenticate');
+		throw new AppError(httpStatus.UNAUTHORIZED, 'Please authenticate');
 	}
 };
 

@@ -1,6 +1,8 @@
+import httpStatus from 'http-status';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import TokenModel from '../models/token.model.js';
+import AppError from '../utils/AppError.js';
 
 /**
  * Generate JWT Token
@@ -53,7 +55,7 @@ const verifyToken = async (token, type) => {
 		user: payload.sub,
 	});
 	if (!tokenDoc) {
-		throw new Error('Token not found');
+		throw new AppError(httpStatus.UNAUTHORIZED);
 	}
 	return tokenDoc;
 };
