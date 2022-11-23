@@ -7,6 +7,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node -r dotenv/config server.js",
+		"watch": "node --watch -r dotenv/config server.js",
 		"lint": "eslint . --fix"
 	},
 	"repository": {
