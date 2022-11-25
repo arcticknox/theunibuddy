@@ -12,7 +12,7 @@ router.route('/organization')
     .post(requestValidatorMiddleware(adminValidations.create),
         [authMiddleware(), adminAuthMiddleware()], adminController.create);
 
-router.route('organization/:organizationId')
+router.route('/organization/:organizationId')
     .put(requestValidatorMiddleware(adminValidations.update),
         [authMiddleware(), adminAuthMiddleware()], adminController.update)
     .delete(requestValidatorMiddleware(adminValidations.deleteOrg),

@@ -1,4 +1,6 @@
+import httpStatus from 'http-status';
 import OrganizationModel from '../models/organization.model.js';
+import AppError from '../utils/AppError.js';
 
 const getOrganizations = async () => {
   const organization = await OrganizationModel.find();
@@ -25,6 +27,7 @@ const createOrganization = async (body) => {
  */
 const updateOrganization = async (id, updateObject) => {
   const organization = await OrganizationModel.findOneAndUpdate({_id: id}, {$set: updateObject}, {new: true});
+  if (!organization) throw new AppError(httpStatus.NOT_FOUND, 'Organization not found.');
   return organization;
 };
 

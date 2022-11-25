@@ -13,13 +13,13 @@ const create = catchAsync(async (req, res) => {
 });
 
 const update = catchAsync(async (req, res) => {
-  const {params: organizationId} = req;
-  const org = await adminService.updateOrganization(organizationId);
+  const {params: {organizationId}, body} = req;
+  const org = await adminService.updateOrganization(organizationId, body );
   responseHandler(res, org);
 });
 
 const deleteOrg = catchAsync(async (req, res) => {
-  const {params: organizationId} = req;
+  const {params: {organizationId}} = req;
   const org = await adminService.deleteOrganization(organizationId);
   responseHandler(res, org);
 });
