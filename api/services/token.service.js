@@ -55,7 +55,7 @@ const verifyToken = async (token, type) => {
     user: payload.sub,
   });
   if (!tokenDoc) {
-    throw new AppError(httpStatus.UNAUTHORIZED);
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid token');
   }
   return tokenDoc;
 };
@@ -86,9 +86,21 @@ const generateAuthTokens = async (userId) => {
   };
 };
 
+/**
+ * Generate email verification token
+ * @param {String} userId
+ */
+const generateEmailVerificationToken = async (userId) => {
+  const tokenExpires = moment().add(720, 'minutes');
+  const token = generateJWT(userId, tokenExpires, 'email-verify');
+  await saveToken(token, userId, tokenExpires, 'email-verify');
+  return token;
+};
+
 export default {
   generateJWT,
   saveToken,
   verifyToken,
   generateAuthTokens,
+  generateEmailVerificationToken,
 };

@@ -28,5 +28,6 @@ router.post(
     authMiddleware(),
     authController.refreshTokens,
 );
+router.get('/verify-email', authController.verifyUserEmail);
 
 export default router;

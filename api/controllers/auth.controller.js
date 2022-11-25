@@ -38,9 +38,16 @@ const refreshTokens = catchAsync(async (req, res) => {
   responseHandler(res, {...tokens});
 });
 
+const verifyUserEmail = catchAsync(async (req, res) => {
+  const {query: {token}, user} = req;
+  await AuthService.verifyEmail(token, user);
+  responseHandler(res);
+});
+
 export default {
   register,
   loginWithEmail,
   logout,
   refreshTokens,
+  verifyUserEmail,
 };

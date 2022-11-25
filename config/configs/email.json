@@ -1,0 +1,38 @@
+{
+    "host": {
+        "doc": "SMTP host",
+        "env": "SMTP_HOST",
+        "format": "String",
+        "default": "smtp.com"
+    },
+    "port": {
+        "doc": "SMTP port",
+        "env": "SMTP_PORT",
+        "format": "Number",
+        "default": 587
+    },
+    "user": {
+        "doc": "SMTP user",
+        "env": "SMTP_USER",
+        "format": "String",
+        "default": "admin@admin.com"
+    },
+    "password": {
+        "doc": "SMTP password",
+        "env": "SMTP_PASS",
+        "format": "String",
+        "default": "password"
+    },
+    "from": {
+        "doc": "From email",
+        "env": "SMTP_FROM_EMAIL",
+        "format": "String",
+        "default": "no-reply@unibuddy.com"
+    },
+    "verifyDomain": {
+        "doc": "Verify domain",
+        "env": "SMTP_VERIFY_DOMAIN",
+        "format": "String",
+        "default": "http://localhost:8080"
+    }
+}
