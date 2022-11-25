@@ -3,24 +3,22 @@ import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import TokenModel from '../models/token.model.js';
 import AppError from '../utils/AppError.js';
+import config from '../../config/index.js';
 
 /**
  * Generate JWT Token
  * @param {String} userId
  * @param {Date} expires
  * @param {String} type
- * @param {String} secret
- * TODO: Fetch secret from config
- * @returns
  */
-const generateJWT = (userId, expires, type, secret = 'supersecret') => {
+const generateJWT = (userId, expires, type) => {
   const payload = {
     sub: userId,
     iat: moment().unix(),
     exp: expires.unix(),
     type,
   };
-  return jwt.sign(payload, secret);
+  return jwt.sign(payload, config.jwt.privateKey, {algorithm: config.jwt.algorithm});
 };
 
 /**
@@ -48,7 +46,7 @@ const saveToken = async (token, userId, expires, type) => {
  * @returns
  */
 const verifyToken = async (token, type) => {
-  const payload = jwt.verify(token, 'supersecret');
+  const payload = jwt.verify(token, config.jwt.publicKey, {algorithm: config.jwt.algorithm});
   const tokenDoc = await TokenModel.findOne({
     token,
     type,

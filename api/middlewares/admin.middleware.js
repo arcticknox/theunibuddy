@@ -6,7 +6,6 @@ import AppError from '../utils/AppError.js';
  * Admin Auth Middleware
  */
 const adminAuthMiddleware = () => (req, res, next) => {
-  console.log(req.user);
   if (_.get(req, 'user.role', 'user') !== 'user') return next();
   throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorized.');
 };

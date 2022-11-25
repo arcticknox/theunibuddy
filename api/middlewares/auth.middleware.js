@@ -1,9 +1,10 @@
 import passport from 'passport';
 import httpStatus from 'http-status';
+import AppError from '../utils/AppError.js';
 
 const verifyCallback = (req, resolve, reject) => async (err, user, info) => {
   if (err || info || !user) {
-    return reject(new Error(httpStatus.UNAUTHORIZED, 'Please authenticate'));
+    return reject(new AppError(httpStatus.UNAUTHORIZED, 'Please authenticate'));
   }
   req.user = user;
   resolve();
