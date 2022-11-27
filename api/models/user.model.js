@@ -33,13 +33,70 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
         trim: true,
-        enum: ['user', 'admin'],
+        enum: ['user', 'admin', 'superadmin'],
         default: 'user',
       },
       organizationId: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Organization',
         required: true,
+      },
+      gender: {
+        type: String,
+        trim: true,
+        enum: ['Female', 'Male', 'Other'],
+      },
+      mobile: {
+        type: String,
+        trim: true,
+      },
+      rentBudgetLimit: {
+        type: Number,
+        trim: true,
+      },
+      dietaryPreference: {
+        type: String,
+        trim: true,
+        enum: ['Vegan', 'Vegetarian', 'Any'],
+      },
+      roommateGenderPreference: {
+        type: String,
+        trim: true,
+        enum: ['Male', 'Female', 'Mixed'],
+      },
+      moveInDate: {
+        type: Date,
+        trim: true,
+      },
+      country: {
+        type: String,
+        trim: true,
+      },
+      dob: {
+        type: Date,
+        trim: true,
+      },
+      program: {
+        type: String,
+        trim: true,
+      },
+      intake: {
+        type: String,
+        trim: true,
+      },
+      studyLevel: {
+        type: String,
+        trim: true,
+        enum: ['Bachelors', 'Masters', 'PhD'],
+      },
+      contactPreference: {
+        type: String,
+        trim: true,
+        enum: ['Whatsapp', 'iMessage', 'LinkedIn'],
+      },
+      linkedIn: {
+        type: String,
+        trim: true,
       },
     },
     {timestamps: true, versionKey: false},

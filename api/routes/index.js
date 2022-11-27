@@ -1,5 +1,6 @@
 import AuthRoute from './auth.route.js';
 import AdminRoute from './admin.route.js';
+import UserRoute from './user.route.js';
 
 const appRoutes = [
   {
@@ -9,6 +10,10 @@ const appRoutes = [
   {
     path: '/admin',
     route: AdminRoute,
+  },
+  {
+    path: '/user',
+    route: UserRoute,
   },
 ];
 
