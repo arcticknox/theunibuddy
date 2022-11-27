@@ -16,8 +16,8 @@ import config from '../../config/index.js';
 const checkPasswordMatch = async (userSentPassword, password) => bcrypt.compare(userSentPassword, password);
 
 const getLoginQuery = (email) => {
-  if (config.app.env !== 'dev') return {email, isEmailVerified: true};
-  return {email};
+  if (config.app.env !== 'dev') return { email, isEmailVerified: true };
+  return { email };
 };
 /**
  * Login with email and password
@@ -66,7 +66,7 @@ const refreshAuthToken = async (refreshToken) => {
         refreshToken,
         'refresh',
     );
-    const user = await UserModel.findOne({_id: refreshTokenDoc.user._id});
+    const user = await UserModel.findOne({ _id: refreshTokenDoc.user._id });
     if (!user) {
       throw new AppError(httpStatus.UNAUTHORIZED);
     }
@@ -84,10 +84,10 @@ const refreshAuthToken = async (refreshToken) => {
 const verifyEmail = async (token) => {
   const verifiedToken = await TokenService.verifyToken(token, 'email-verify');
   if (!verifiedToken) throw new AppError(httpStatus.BAD_REQUEST, 'Verification failed');
-  const userInfo = await UserModel.findOne({_id: verifiedToken.user});
-  await TokenModel.deleteMany({user: userInfo._id, type: 'email-verify'}); // Delete token
+  const userInfo = await UserModel.findOne({ _id: verifiedToken.user });
+  await TokenModel.deleteMany({ user: userInfo._id, type: 'email-verify' }); // Delete token
   // Set email as verified
-  await UserModel.findOneAndUpdate({_id: userInfo._id}, {$set: {isEmailVerified: true}});
+  await UserModel.findOneAndUpdate({ _id: userInfo._id }, { $set: { isEmailVerified: true } });
 };
 
 export default {

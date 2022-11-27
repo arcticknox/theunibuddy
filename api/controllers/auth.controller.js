@@ -10,24 +10,24 @@ import catchAsync from '../utils/catchAsync.js';
  * @param {Object} res
  */
 const register = catchAsync(async (req, res) => {
-  const {body} = req;
+  const { body } = req;
   const user = await UserService.createUser(body);
   const tokens = await TokenService.generateAuthTokens(user._id);
-  responseHandler(res, {user, tokens});
+  responseHandler(res, { user, tokens });
 });
 
 const loginWithEmail = catchAsync(async (req, res) => {
   const {
-    body: {email, password},
+    body: { email, password },
   } = req;
   const user = await AuthService.loginWithEmail(email, password);
   const tokens = await TokenService.generateAuthTokens(user._id);
-  responseHandler(res, {user, tokens});
+  responseHandler(res, { user, tokens });
 });
 
 const logout = catchAsync(async (req, res) => {
   const {
-    body: {refreshToken},
+    body: { refreshToken },
   } = req;
   await AuthService.logout(refreshToken);
   responseHandler(res, 'Successfuly logged out.');
@@ -35,11 +35,11 @@ const logout = catchAsync(async (req, res) => {
 
 const refreshTokens = catchAsync(async (req, res) => {
   const tokens = await AuthService.refreshAuthToken(req.body.refreshToken);
-  responseHandler(res, {...tokens});
+  responseHandler(res, { ...tokens });
 });
 
 const verifyUserEmail = catchAsync(async (req, res) => {
-  const {query: {token}, user} = req;
+  const { query: { token }, user } = req;
   await AuthService.verifyEmail(token, user);
   responseHandler(res);
 });

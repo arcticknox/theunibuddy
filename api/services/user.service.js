@@ -3,8 +3,8 @@ import _ from 'lodash';
 import OrganizationModel from '../models/organization.model.js';
 import UserModel from '../models/user.model.js';
 import AppError from '../utils/AppError.js';
-import {splitDomainFromEmail} from '../utils/stringUtil.js';
-import {sendVerificationEmail} from './email.service.js';
+import { splitDomainFromEmail } from '../utils/stringUtil.js';
+import { sendVerificationEmail } from './email.service.js';
 import TokenService from './token.service.js';
 import mongoose from 'mongoose';
 
@@ -13,14 +13,14 @@ import mongoose from 'mongoose';
  * @param {Object} userInfo: user info to be saved to create user
  */
 const createUser = async (userInfo) => {
-  const {email} = userInfo;
+  const { email } = userInfo;
   const isEmailTaken = await UserModel.isEmailTaken(email);
   if (isEmailTaken) throw new AppError(httpStatus.BAD_REQUEST, 'Email already taken');
   const emailEscaped = splitDomainFromEmail(email);
   // Map with an organization
-  const organization = await OrganizationModel.findOne({domains: emailEscaped});
+  const organization = await OrganizationModel.findOne({ domains: emailEscaped });
   if (!organization) throw new AppError(httpStatus.BAD_REQUEST, 'Organization not supported yet.');
-  const user = await UserModel.create({...userInfo, organizationId: _.get(organization, '_id')});
+  const user = await UserModel.create({ ...userInfo, organizationId: _.get(organization, '_id') });
   // Send email verification link
   const emailVerificationToken = await TokenService.generateEmailVerificationToken(user._id);
   await sendVerificationEmail(user.email, emailVerificationToken);
@@ -33,7 +33,7 @@ const createUser = async (userInfo) => {
  * returns user info
  */
 const fetchUserById = async (_id) => {
-  const findBy = {'_id': mongoose.Types.ObjectId(_id)};
+  const findBy = { '_id': mongoose.Types.ObjectId(_id) };
   const userInfo = await UserModel.findOne(findBy);
   if (!userInfo) throw new AppError(httpStatus.BAD_REQUEST, 'Invalid user indentifier provided');
   return userInfo;
@@ -47,8 +47,8 @@ const fetchUserById = async (_id) => {
  */
 const updateUser = async (_id, userInfo) => {
   if (userInfo.email) delete userInfo.email;
-  const findBy = {'_id': mongoose.Types.ObjectId(_id)};
-  const updatedUserInfo = await UserModel.findOneAndUpdate(findBy, userInfo, {new: true});
+  const findBy = { '_id': mongoose.Types.ObjectId(_id) };
+  const updatedUserInfo = await UserModel.findOneAndUpdate(findBy, userInfo, { new: true });
   if (!updatedUserInfo) throw new AppError(httpStatus.BAD_REQUEST, 'Invalid user indentifier provided, update operation failed');
   return updatedUserInfo;
 };
@@ -59,11 +59,11 @@ const updateUser = async (_id, userInfo) => {
  * @param {Boolean} softDelete: flag to decide whether to update or delete from db
  */
 const deleteUser = async (_id, softDelete=true) => {
-  const findBy = {'_id': mongoose.Types.ObjectId(_id)};
+  const findBy = { '_id': mongoose.Types.ObjectId(_id) };
   if (softDelete) {
     console.log(findBy);
-    const updateData = {isDeleted: true};
-    const updatedUserInfo = await UserModel.findOneAndUpdate(findBy, {$set: updateData}, {new: true});
+    const updateData = { isDeleted: true };
+    const updatedUserInfo = await UserModel.findOneAndUpdate(findBy, { $set: updateData }, { new: true });
     if (!updatedUserInfo) throw new AppError(httpStatus.BAD_REQUEST, 'Invalid user indentifier provided, delete operation failed');
     return;
   }

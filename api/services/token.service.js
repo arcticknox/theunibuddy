@@ -18,7 +18,7 @@ const generateJWT = (userId, expires, type) => {
     exp: expires.unix(),
     type,
   };
-  return jwt.sign(payload, config.jwt.privateKey, {algorithm: config.jwt.algorithm});
+  return jwt.sign(payload, config.jwt.privateKey, { algorithm: config.jwt.algorithm });
 };
 
 /**
@@ -46,7 +46,7 @@ const saveToken = async (token, userId, expires, type) => {
  * @returns
  */
 const verifyToken = async (token, type) => {
-  const payload = jwt.verify(token, config.jwt.publicKey, {algorithm: config.jwt.algorithm});
+  const payload = jwt.verify(token, config.jwt.publicKey, { algorithm: config.jwt.algorithm });
   const tokenDoc = await TokenModel.findOne({
     token,
     type,

@@ -99,12 +99,12 @@ const userSchema = new mongoose.Schema(
         trim: true,
       },
     },
-    {timestamps: true, versionKey: false},
+    { timestamps: true, versionKey: false },
 );
 
 userSchema.statics = {
   async isEmailTaken(email) {
-    const user = await this.findOne({email});
+    const user = await this.findOne({ email });
     return !!user;
   },
 };

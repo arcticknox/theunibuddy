@@ -1,4 +1,4 @@
-import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import UserModel from '../models/user.model.js';
 import config from '../../config/index.js';
 

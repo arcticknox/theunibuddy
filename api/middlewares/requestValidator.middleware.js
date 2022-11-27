@@ -11,7 +11,7 @@ import responseHandler from '../utils/responseHandler.js';
 const requestValidatorMiddleware = (schema) => (req, res, next) => {
   const reqSchema = _.pick(schema, ['body', 'params', 'query']);
   const requestObject = _.pick(req, _.keys(reqSchema));
-  const {value, error} = Joi.compile(reqSchema).validate(requestObject);
+  const { value, error } = Joi.compile(reqSchema).validate(requestObject);
   if (error) {
     const message = error.details.map((detail) => detail.message);
     return next(responseHandler(res, message, httpStatus.BAD_REQUEST));

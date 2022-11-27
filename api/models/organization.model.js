@@ -15,7 +15,7 @@ const organizationModel = mongoose.Schema(
         trim: true,
       },
 
-    }, {timestamps: true, versionKey: false},
+    }, { timestamps: true, versionKey: false },
 );
 
 const OrganizationModel = mongoose.model('organization', organizationModel);

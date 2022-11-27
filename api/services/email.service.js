@@ -25,7 +25,7 @@ transporter.verify()
  * @returns {Promise}
  */
 const sendEmail = async (to, subject, text) => {
-  const message = {from: config.email.from, to, subject, text};
+  const message = { from: config.email.from, to, subject, text };
   await transporter.sendMail(message);
 };
 

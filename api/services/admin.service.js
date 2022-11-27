@@ -14,8 +14,8 @@ const getOrganizations = async () => {
  * @returns {Object}
  */
 const createOrganization = async (body) => {
-  const {name, domains} = body;
-  const organization = await OrganizationModel.create({name, domains});
+  const { name, domains } = body;
+  const organization = await OrganizationModel.create({ name, domains });
   return organization;
 };
 
@@ -26,7 +26,7 @@ const createOrganization = async (body) => {
  * @returns {Object}
  */
 const updateOrganization = async (id, updateObject) => {
-  const organization = await OrganizationModel.findOneAndUpdate({_id: id}, {$set: updateObject}, {new: true});
+  const organization = await OrganizationModel.findOneAndUpdate({ _id: id }, { $set: updateObject }, { new: true });
   if (!organization) throw new AppError(httpStatus.NOT_FOUND, 'Organization not found.');
   return organization;
 };
@@ -36,7 +36,7 @@ const updateOrganization = async (id, updateObject) => {
  * @param {String} id
  */
 const deleteOrganization = async (id) => {
-  await OrganizationModel.remove({_id: id});
+  await OrganizationModel.remove({ _id: id });
 };
 
 export default {
