@@ -2,6 +2,7 @@ import AuthRoute from './auth.route.js';
 import AdminRoute from './admin.route.js';
 import UserRoute from './user.route.js';
 import RoomRoute from './room.route.js';
+import ProjectRoute from './project.route.js';
 
 const appRoutes = [
   {
@@ -19,6 +20,10 @@ const appRoutes = [
   {
     path: '/room',
     route: RoomRoute,
+  },
+  {
+    path: '/project-group',
+    route: ProjectRoute,
   },
 ];
 
