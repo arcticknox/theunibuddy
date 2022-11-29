@@ -8,8 +8,7 @@ import store from './redux/store';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-} from "react-router-dom";
+} from 'react-router-dom';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Navbar from './components/Navbar/Navbar';
@@ -17,30 +16,30 @@ import Navbar from './components/Navbar/Navbar';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <App />,
   },
   {
     path: '/login',
-    element: <Login />
+    element: <Login />,
   },
   {
     path: '/signup',
-    element: <SignUp />
+    element: <SignUp />,
   },
   {
     path: '/home',
-    element: <div>Home</div>
-  }
-])
+    element: <div>Home</div>,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-		<React.StrictMode>
-      <Navbar />
-			  <RouterProvider router={router} />
-		</React.StrictMode>
-	</Provider>
+    <Provider store={store}>
+      <React.StrictMode>
+        <Navbar />
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    </Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function
