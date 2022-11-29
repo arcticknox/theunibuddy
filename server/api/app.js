@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import routes from './routes/index.js';
 import jwtStrategy from './utils/jwtStrategy.js';
 import errorHandlerMiddleware from './middlewares/error.middlware.js';
+import authMiddleware from './middlewares/auth.middleware.js';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(morgan('combined'));
 // JWT auth strategy
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
+app.use(authMiddleware);
 app.use(routes);
 app.use(errorHandlerMiddleware);
 

@@ -1,0 +1,8 @@
+{
+    "ignoreList": [
+        "auth/register",
+        "auth/login",
+        "auth/verify-email"
+    ] 
+
+}
