@@ -6,6 +6,7 @@ import requestValidatorMiddleware from '../middlewares/requestValidator.middlewa
 import adminValidations from '../validations/admin.validations.js';
 
 const router = express.Router();
+const path = '/admin';
 
 router.route('/organization')
     .get([authMiddleware(), adminAuthMiddleware()], adminController.get)
@@ -18,4 +19,8 @@ router.route('/organization/:organizationId')
     .delete(requestValidatorMiddleware(adminValidations.deleteOrg),
         [authMiddleware(), adminAuthMiddleware()], adminController.deleteOrg);
 
-export default router;
+export {
+  router,
+  path,
+};
+

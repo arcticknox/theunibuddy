@@ -5,6 +5,7 @@ import authMiddleware from '../middlewares/auth.middleware.js';
 import roomValidations from '../validations/room.validations.js';
 
 const router = express.Router();
+const path = '/room';
 
 router.route('/')
     .post(
@@ -42,4 +43,7 @@ router.route('/:roomId').delete(
 );
 
 
-export default router;
+export {
+  router,
+  path,
+};

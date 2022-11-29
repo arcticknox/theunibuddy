@@ -5,6 +5,7 @@ import authMiddleware from '../middlewares/auth.middleware.js';
 import projectValidations from '../validations/project.validations.js';
 
 const router = express.Router();
+const path = '/project';
 
 router.route('/')
     .post(
@@ -43,4 +44,7 @@ router.route('/:groupId').delete(
 );
 
 
-export default router;
+export {
+  router,
+  path,
+};

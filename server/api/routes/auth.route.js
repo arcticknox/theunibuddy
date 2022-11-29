@@ -5,6 +5,7 @@ import requestValidatorMiddleware from '../middlewares/requestValidator.middlewa
 import authValidations from '../validations/auth.validations.js';
 
 const router = express.Router();
+const path = '/auth';
 
 router.post(
     '/register',
@@ -30,4 +31,7 @@ router.post(
 );
 router.get('/verify-email', authController.verifyUserEmail);
 
-export default router;
+export {
+  router,
+  path,
+};

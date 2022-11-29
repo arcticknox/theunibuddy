@@ -18,7 +18,7 @@ app.use(morgan('combined'));
 // JWT auth strategy
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
-routes(app);
+app.use(routes);
 app.use(errorHandlerMiddleware);
 
 export default app;

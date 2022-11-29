@@ -1,34 +1,24 @@
-import AuthRoute from './auth.route.js';
-import AdminRoute from './admin.route.js';
-import UserRoute from './user.route.js';
-import RoomRoute from './room.route.js';
-import ProjectRoute from './project.route.js';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import express from 'express';
 
-const appRoutes = [
-  {
-    path: '/auth',
-    route: AuthRoute,
-  },
-  {
-    path: '/admin',
-    route: AdminRoute,
-  },
-  {
-    path: '/user',
-    route: UserRoute,
-  },
-  {
-    path: '/room',
-    route: RoomRoute,
-  },
-  {
-    path: '/project-group',
-    route: ProjectRoute,
-  },
-];
+const fileUrl = fileURLToPath(import.meta.url);
+const directoryName = dirname(fileUrl);
 
-export default (app) => {
-  appRoutes.forEach((route) => {
-    app.use(route.path, route.route);
+const expressRouter = express.Router();
+
+/**
+ * Export routes
+ * @param {String} filename
+ */
+const routeExporter = (filename) => {
+  if (filename === 'index.js') return;
+  import(`./${filename}`).then(({ router, path }) => {
+    expressRouter.use(path, router);
   });
 };
+
+fs.readdirSync(directoryName).forEach(routeExporter);
+
+export default expressRouter;
