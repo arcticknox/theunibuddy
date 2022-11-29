@@ -44,10 +44,24 @@ const verifyUserEmail = catchAsync(async (req, res) => {
   responseHandler(res);
 });
 
+const passwordReset = catchAsync(async (req, res) => {
+  const { email } = req.body;
+  await AuthService.passwordReset(email);
+  responseHandler(res);
+});
+
+const verifyPasswordReset = catchAsync(async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+  await AuthService.verifyPasswordReset(email, otp, newPassword);
+  responseHandler(res);
+});
+
 export default {
   register,
   loginWithEmail,
   logout,
   refreshTokens,
   verifyUserEmail,
+  passwordReset,
+  verifyPasswordReset,
 };

@@ -3,10 +3,12 @@ import bcrypt from 'bcrypt';
 import _ from 'lodash';
 import UserModel from '../models/user.model.js';
 import TokenModel from '../models/token.model.js';
+import OtpToUserModel from '../models/otpToUserMap.model.js';
 import TokenService from './token.service.js';
 import AppError from '../utils/AppError.js';
 import config from '../../config/index.js';
-
+import { sendOtpEmail } from './email.service.js';
+import otpUtil from '../utils/otpUtil.js';
 /**
  * Check user sent password with saved password
  * @param {String} userSentPassword
@@ -90,9 +92,48 @@ const verifyEmail = async (token) => {
   await UserModel.findOneAndUpdate({ _id: userInfo._id }, { $set: { isEmailVerified: true } });
 };
 
+/**
+ * User password reset activity
+ * @param {String} email for which password reset is requested
+ */
+const passwordReset = async (email) => {
+  const userInfo = await UserModel.findOne({ email });
+  if (!_.isEmpty(userInfo) && userInfo.isEmailVerified && !userInfo.isDeleted) {
+    const otp = otpUtil.generateOTP();
+    await OtpToUserModel.findOneAndUpdate({ email }, { email, otp }, { upsert: true });
+    await sendOtpEmail(userInfo.email, otp);
+  } else {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Incorrect email or email not verified. Please check and try again!');
+  }
+};
+
+/**
+ * User password reset verification and saving new password
+ * @param {String} email for which password reset should be verified
+ * @param {String} otp sent to user email for verification
+ * @param {String} newPassword new password to be saved against the user
+ */
+const verifyPasswordReset = async (email, otp, newPassword) => {
+  const otpToUserMap = await OtpToUserModel.findOne({ email });
+  const userInfo = await UserModel.findOne({ email });
+  if (!_.isEmpty(otpToUserMap) && !_.isEmpty(userInfo) && !userInfo.isDeleted) {
+    await OtpToUserModel.deleteOne({ email });
+    if (otpToUserMap.otp === otp && otpUtil.verifyOTP(otp)) {
+      userInfo.password = newPassword;
+      return userInfo.save();
+    } else {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'Incorrect OTP provided or OTP expired. Please check and try again!');
+    }
+  } else {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Please check and try again!');
+  }
+};
+
 export default {
   loginWithEmail,
   logout,
   refreshAuthToken,
   verifyEmail,
+  passwordReset,
+  verifyPasswordReset,
 };
