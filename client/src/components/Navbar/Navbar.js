@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountMenu from '../AccountMenu/AccountMenu';
 
 function Navbar() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -33,10 +33,10 @@ function Navbar() {
                 UniBuddy
           </Typography>
           {isLoggedIn ?
-              <AccountCircleIcon fontSize='large' /> :
-              <Button color="inherit" href='/login'>
+          <AccountMenu /> :
+          <Button color="inherit" href='/login'>
                 Login
-              </Button>}
+          </Button>}
         </Toolbar>
       </AppBar>
     </Box>

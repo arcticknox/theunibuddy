@@ -52,7 +52,7 @@ function SignUp() {
               <div>
                 <TextField
                   label="Name"
-                  id="signup-email-textfield"
+                  id="signup-name-textfield"
                   sx={{ m: 1, width: '25ch' }}
                   value={values.name}
                   onChange={handleChange('name')}
