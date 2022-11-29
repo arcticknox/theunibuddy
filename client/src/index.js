@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -12,11 +11,16 @@ import {
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+
+const persistor = persistStore(store);
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Home />,
   },
   {
     path: '/login',
@@ -26,19 +30,17 @@ const router = createBrowserRouter([
     path: '/signup',
     element: <SignUp />,
   },
-  {
-    path: '/home',
-    element: <div>Home</div>,
-  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
-      <React.StrictMode>
-        <Navbar />
-        <RouterProvider router={router} />
-      </React.StrictMode>
+      <PersistGate loading={null} persistor={persistor}>
+        <React.StrictMode>
+          <Navbar />
+          <RouterProvider router={router} />
+        </React.StrictMode>
+      </PersistGate>
     </Provider>,
 );
 
