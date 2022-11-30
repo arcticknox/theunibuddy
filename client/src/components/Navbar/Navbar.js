@@ -7,6 +7,7 @@ import {
   IconButton,
   Typography,
   Button,
+  Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
@@ -29,8 +30,9 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                UniBuddy
+          <Typography variant="h6" component="div"
+            sx={{ flexGrow: 1 }}>
+            <Link href='/' underline='none' color={'white'}>UniBuddy</Link>
           </Typography>
           {isLoggedIn ?
           <AccountMenu /> :
