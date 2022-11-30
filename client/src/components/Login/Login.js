@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Container, Paper, TextField, Button, FormControl,
   OutlinedInput, InputAdornment, IconButton, InputLabel,
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import fetchAPI from '../../utils/fetchAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthInfo, setIsLoggedIn } from '../../redux/slices/authSlice';
@@ -17,7 +17,6 @@ function Login() {
     password: '',
     showPassword: false,
   });
-  const navigate = useNavigate();
   const userInfo = useSelector((state) => state.auth.userInfo);
   const accessToken = useSelector((state) => state.auth.accessToken);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -32,7 +31,6 @@ function Login() {
     const response = await fetchAPI('http://localhost:8080/auth/login', 'post', body);
     dispatch(setAuthInfo(response));
     dispatch(setIsLoggedIn());
-    if (isLoggedIn) navigate('/home');
   };
 
   const handleChange =
@@ -49,6 +47,7 @@ function Login() {
 
   return (
     <Container maxWidth="md" className='login-container'>
+      {isLoggedIn && (<Navigate to='/' />)}
       <Paper elevation={24} textAlign='center' className='login-main-paper'>
         <div>
           <h2>Login</h2>
