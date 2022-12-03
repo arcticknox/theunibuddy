@@ -117,9 +117,9 @@ const verifyPasswordReset = async (email, otp, newPassword) => {
   const otpToUserMap = await OtpToUserModel.findOne({ email });
   const userInfo = await UserModel.findOne({ email });
   if (!_.isEmpty(otpToUserMap) && !_.isEmpty(userInfo) && !userInfo.isDeleted) {
-    await OtpToUserModel.deleteOne({ email });
     if (otpToUserMap.otp === otp && otpUtil.verifyOTP(otp)) {
       userInfo.password = newPassword;
+      await OtpToUserModel.deleteOne({ email });
       return userInfo.save();
     } else {
       throw new AppError(httpStatus.UNAUTHORIZED, 'Incorrect OTP provided or OTP expired. Please check and try again!');

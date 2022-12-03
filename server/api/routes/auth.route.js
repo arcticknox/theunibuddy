@@ -31,7 +31,7 @@ router.get('/verify-email', authController.verifyUserEmail);
 
 router.post('/password-reset', authController.passwordReset);
 
-router.get('/verify-password-reset', authController.verifyPasswordReset);
+router.put('/verify-password-reset', authController.verifyPasswordReset);
 
 export {
   router,

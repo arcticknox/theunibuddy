@@ -5,6 +5,7 @@ import SignUp from './components/SignUp/SignUp';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import PrivateRoute from './utils/PrivateRoute';
+import PasswordReset from './components/PasswordReset/PasswordReset';
 import {
   Route,
   BrowserRouter,
@@ -22,6 +23,7 @@ function App() {
             element={<PrivateRoute><Home /></PrivateRoute>}></Route>
           <Route element={<Login />} path={'/login'}></Route>
           <Route element={<SignUp />} path={'/signup'}></Route>
+          <Route element={<PasswordReset />} path={'/passwordreset'}></Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -26,7 +26,7 @@ function SignUp() {
       password: values.password,
     };
     const response = await fetchAPI('http://localhost:8080/auth/register', 'post', body);
-    if (response) setValues({ hasRegistered: true });
+    if (response.success) setValues({ hasRegistered: true });
   };
 
   const handleChange =

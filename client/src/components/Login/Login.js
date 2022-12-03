@@ -29,7 +29,7 @@ function Login() {
       password: values.password,
     };
     const response = await fetchAPI('http://localhost:8080/auth/login', 'post', body);
-    dispatch(setAuthInfo(response));
+    dispatch(setAuthInfo(response.data));
     dispatch(setIsLoggedIn());
   };
 
@@ -87,7 +87,7 @@ function Login() {
           </FormControl>
         </div>
         <div>
-          <p><a href='#'>Forgot password?</a></p>
+          <p><a href='/passwordreset'>Forgot password?</a></p>
         </div>
         <div>
           <Button onClick={async () => {
