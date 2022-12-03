@@ -34,11 +34,11 @@ function HomeTile(props) {
         'height': 300,
       }}
     >
-      <div style={{ 'text-align': 'center' }}>
+      <div style={{ textAlign: 'center' }}>
         <img src={getTitleImage()} width={'70%'}></img>
         <h3>{props.title}</h3>
       </div>
-      <div style={{ 'text-align': 'center' }}>
+      <div style={{ textAlign: 'center' }}>
         <Button variant="outlined">
           {props.type === 'blogs' ? 'View' : 'Join'}
         </Button>

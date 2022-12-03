@@ -1,5 +1,6 @@
 import './Navbar.scss';
 import * as React from 'react';
+import { useState } from 'react';
 import {
   Box,
   AppBar,
@@ -8,13 +9,34 @@ import {
   Typography,
   Button,
   Link,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
 import AccountMenu from '../AccountMenu/AccountMenu';
+import ConnectWithoutContactIcon from
+  '@mui/icons-material/ConnectWithoutContact';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+
+const drawerListData = [
+  {
+    name: 'Roommate Finder',
+    icon: <ConnectWithoutContactIcon fontSize='medium'/>,
+  },
+  {
+    name: 'Project Finder',
+    icon: <PeopleAltIcon fontSize='medium' />,
+  },
+];
 
 function Navbar() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [drawerState, setDrawerState] = useState(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -28,7 +50,7 @@ function Navbar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <MenuIcon onClick={() => setDrawerState(true)} />
           </IconButton>
           <Typography variant="h6" component="div"
             sx={{ flexGrow: 1 }}>
@@ -41,6 +63,29 @@ function Navbar() {
           </Button>}
         </Toolbar>
       </AppBar>
+      <Drawer
+        anchor={'left'}
+        open={drawerState}
+        onClose={() => setDrawerState(false)}
+      >
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+        >
+          <List>
+            {drawerListData.map((item, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
     </Box>
   );
 }
