@@ -1,4 +1,7 @@
 import express from 'express';
+import helmet from 'helmet';
+import hpp from 'hpp';
+import mongoSanitize from 'express-mongo-sanitize';
 import cors from 'cors';
 import passport from 'passport';
 import morgan from 'morgan';
@@ -16,6 +19,15 @@ app.use(express.urlencoded({
 }));
 // create "middleware"
 app.use(morgan('combined'));
+
+// Security middlewares
+// Helmet
+app.use(helmet());
+// hpp
+app.use(hpp());
+// Mongo sanitize
+app.use(mongoSanitize());
+
 // JWT auth strategy
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
