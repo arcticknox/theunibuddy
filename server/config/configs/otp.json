@@ -16,11 +16,5 @@
         "format": "Number",
         "default": 300,
         "env": "OTP_STEP"
-    },
-    "secret": {
-        "doc": "The secret / seed length",
-        "format": "String",
-        "default": "7B2C47E98F28B63CBD12F6A2F8AF00C1A24536D7F1E35DBCACC04079A3D0A867",
-        "env": "OTP_SECRET"
     }
 }

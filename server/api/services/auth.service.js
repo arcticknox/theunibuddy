@@ -99,9 +99,9 @@ const verifyEmail = async (token) => {
 const passwordReset = async (email) => {
   const userInfo = await UserModel.findOne({ email });
   if (!_.isEmpty(userInfo) && userInfo.isEmailVerified && !userInfo.isDeleted) {
-    const otp = otpUtil.generateOTP();
-    await OtpToUserModel.findOneAndUpdate({ email }, { email, otp }, { upsert: true });
-    await sendOtpEmail(userInfo.email, otp);
+    const { token, totpSecret } = otpUtil.generateOTP();
+    await OtpToUserModel.findOneAndUpdate({ email }, { email, otp: token, totpSecret }, { upsert: true });
+    await sendOtpEmail(userInfo.email, token);
   } else {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Incorrect email or email not verified. Please check and try again!');
   }
@@ -117,7 +117,7 @@ const verifyPasswordReset = async (email, otp, newPassword) => {
   const otpToUserMap = await OtpToUserModel.findOne({ email });
   const userInfo = await UserModel.findOne({ email });
   if (!_.isEmpty(otpToUserMap) && !_.isEmpty(userInfo) && !userInfo.isDeleted) {
-    if (otpToUserMap.otp === otp && otpUtil.verifyOTP(otp)) {
+    if (otpToUserMap.otp === otp && otpUtil.verifyOTP(otp, otpToUserMap.totpSecret)) {
       userInfo.password = newPassword;
       await OtpToUserModel.deleteOne({ email });
       return userInfo.save();

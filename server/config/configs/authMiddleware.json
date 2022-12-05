@@ -3,6 +3,8 @@
         "auth/register",
         "auth/login",
         "auth/verify-email",
+        "auth/password-reset",
+        "auth/verify-password-reset",
         "healthcheck"
     ] 
 

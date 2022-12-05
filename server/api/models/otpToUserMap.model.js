@@ -13,6 +13,11 @@ const optToUserSchema = new mongoose.Schema(
         required: true,
         trim: true,
       },
+      totpSecret: {
+        type: String,
+        required: true,
+        trim: true,
+      },
     },
     { versionKey: false },
 );
