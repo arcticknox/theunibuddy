@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongo:
+        condition: service_healthy 
