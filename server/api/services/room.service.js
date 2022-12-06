@@ -126,6 +126,42 @@ const removeMember = async (userId) => {
   }
 };
 
+/**
+ * Get all the listings
+ * @param {String} userId
+ */
+const getListings = async () => {
+  const userList = await UserModel.find({ isDeleted: false });
+  if (! _.isEmpty(user)) {
+    const listingData = await Promise.all(
+        userList.map(async (user)=>{
+          const name = user._doc.name;
+          const room = await RoomModel.findOne( { members: user._doc._id, isDeleted: false } );
+          let desc = '';
+          let maxCount = 0;
+          let roommates = [];
+          if (room !== null) {
+            desc = room._doc.details;
+            maxCount = room._doc.maxCount;
+            roommates = await Promise.all(
+                room._doc.members.map(async (user) =>{
+                  const userObj = await UserModel.findOne( { _id: user, isDeleted: false } );
+                  return [userObj._doc.name, userObj._doc._id];
+                }),
+            );
+          }
+          return ({
+            userName: name,
+            roomDesc: desc,
+            maxCount: maxCount,
+            members: [...roommates],
+          });
+        }),
+    );
+    return listingData;
+  }
+};
+
 export default {
   createRoom,
   getRooms,
@@ -134,4 +170,5 @@ export default {
   findRoom,
   addMember,
   removeMember,
+  getListings,
 };

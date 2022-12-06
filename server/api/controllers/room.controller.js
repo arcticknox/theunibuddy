@@ -64,6 +64,16 @@ const removeMember = catchAsync( async (req, res) => {
   responseHandler(res, { status });
 });
 
+/**
+ * Remove member from the room
+ * @param {Object} req
+ * @param {Object} res
+ */
+const getListings = catchAsync(async (req, res) => {
+  const status = await RoomService.getListings();
+  responseHandler(res, { status });
+});
+
 export default {
   createRoom,
   getRooms,
@@ -71,4 +81,5 @@ export default {
   deleteRoom,
   addMember,
   removeMember,
+  getListings,
 };

@@ -35,6 +35,9 @@ router.route('/:roomId').delete(
     roomController.deleteRoom,
 );
 
+router.route('/listings').get(
+    roomController.getListings,
+);
 
 export {
   router,
