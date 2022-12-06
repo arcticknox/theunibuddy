@@ -20,7 +20,8 @@ const createUser = async (userInfo) => {
   // Map with an organization
   const organization = await OrganizationModel.findOne({ domains: emailEscaped });
   if (!organization) throw new AppError(httpStatus.BAD_REQUEST, 'Organization not supported yet.');
-  const user = await UserModel.create({ ...userInfo, organizationId: _.get(organization, '_id') });
+  const user = await UserModel.create({ ...userInfo, organizationId: _.get(organization, '_id'),
+    universityName: _.get(organization, 'name') });
   // Send email verification link
   const emailVerificationToken = await TokenService.generateEmailVerificationToken(user._id);
   await sendVerificationEmail(user.email, emailVerificationToken);

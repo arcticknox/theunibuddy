@@ -98,6 +98,10 @@ const userSchema = new mongoose.Schema(
         type: String,
         trim: true,
       },
+      universityName: {
+        type: String,
+        trim: true,
+      },
     },
     { timestamps: true, versionKey: false },
 );
