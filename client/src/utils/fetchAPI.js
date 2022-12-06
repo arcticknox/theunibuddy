@@ -12,8 +12,10 @@ const fetchAPI = async (url, method = 'GET', body, accessToken) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
   };
+  if (method !== 'GET') {
+    options.body = JSON.stringify(body);
+  }
   if (accessToken) options.headers.Authorization = `Bearer ${accessToken}`;
   const response = await fetch(url, options);
   const { success, data } = await response.json();
