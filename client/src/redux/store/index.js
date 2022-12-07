@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from '../slices/authSlice';
+import inviteSlice from '../slices/inviteSlice';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer,
@@ -7,6 +8,7 @@ import { persistReducer,
 
 const reducers = combineReducers({
   auth: authSlice,
+  invite: inviteSlice,
 });
 
 const persistConfig = {

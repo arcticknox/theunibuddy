@@ -17,10 +17,8 @@ function Login() {
     password: '',
     showPassword: false,
   });
-  const userInfo = useSelector((state) => state.auth.userInfo);
-  const accessToken = useSelector((state) => state.auth.accessToken);
+
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log('UserInfo', userInfo, accessToken);
   const dispatch = useDispatch();
 
   const loginUserAPI = async () => {

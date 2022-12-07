@@ -9,9 +9,7 @@ const getAllSentInvites = {
 };
 
 const getAllRecievedInvites = {
-  body: Joi.object().keys({
-    sUserID: Joi.string().allow(null, ''),
-    rUserID: Joi.string().allow(null, ''),
+  params: Joi.object().keys({
     type: Joi.string().required(),
   }),
 };

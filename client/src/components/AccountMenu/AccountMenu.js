@@ -19,7 +19,6 @@ function AccountMenu() {
   const anchorRef = React.useRef(null);
   const refreshToken = useSelector((state) => state.auth.refreshToken.token);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
-  console.log('refresh', refreshToken);
   const dispatch = useDispatch();
 
   const handleToggle = () => {

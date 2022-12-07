@@ -22,6 +22,7 @@ import AccountMenu from '../AccountMenu/AccountMenu';
 import ConnectWithoutContactIcon from
   '@mui/icons-material/ConnectWithoutContact';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 const drawerListData = [
   {
@@ -31,6 +32,11 @@ const drawerListData = [
   {
     name: 'Project Finder',
     icon: <PeopleAltIcon fontSize='medium' />,
+  },
+  {
+    name: 'Invitations',
+    icon: <GroupAddIcon fontSize='medium' />,
+    path: '/invitations',
   },
 ];
 
@@ -75,7 +81,7 @@ function Navbar() {
           <List>
             {drawerListData.map((item, index) => (
               <ListItem key={index} disablePadding>
-                <ListItemButton>
+                <ListItemButton href={item.path}>
                   <ListItemIcon>
                     {item.icon}
                   </ListItemIcon>

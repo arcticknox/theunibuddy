@@ -62,7 +62,6 @@ const updateUser = async (_id, userInfo) => {
 const deleteUser = async (_id, softDelete=true) => {
   const findBy = { '_id': mongoose.Types.ObjectId(_id) };
   if (softDelete) {
-    console.log(findBy);
     const updateData = { isDeleted: true };
     const updatedUserInfo = await UserModel.findOneAndUpdate(findBy, { $set: updateData }, { new: true });
     if (!updatedUserInfo) throw new AppError(httpStatus.BAD_REQUEST, 'Invalid user indentifier provided, delete operation failed');

@@ -15,7 +15,7 @@ router.get(
 
 // get invite
 router.get(
-    '/recieved',
+    '/recieved/:type',
     requestValidatorMiddleware(inviteValidations.getAllRecievedInvites),
     inviteController.getAllRecievedInvites,
 );

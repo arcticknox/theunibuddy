@@ -10,8 +10,8 @@ const getAllSentInvites = catchAsync(async (req, res) => {
 });
 
 const getAllRecievedInvites = catchAsync(async (req, res) => {
-  const { body } = req;
-  const invites = await InviteService.getAllRecievedInvites(req.user._id, body);
+  const { params: { type } } = req;
+  const invites = await InviteService.getAllRecievedInvites(req.user._id, type);
   responseHandler(res, { invites });
 });
 
