@@ -23,6 +23,7 @@ import ConnectWithoutContactIcon from
   '@mui/icons-material/ConnectWithoutContact';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import NotificationBell from '../NotificationBell/NotificationBell';
 
 const drawerListData = [
   {
@@ -40,14 +41,14 @@ const drawerListData = [
   },
 ];
 
-function Navbar() {
+function Navbar(props) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [drawerState, setDrawerState] = useState(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar className='app-navbar'
-        position="static" sx={{ bgcolor: '#1C3879' }}>
+        position="sticky" sx={{ bgcolor: '#1C3879' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -63,7 +64,13 @@ function Navbar() {
             <Link href='/' underline='none' color={'white'}>UniBuddy</Link>
           </Typography>
           {isLoggedIn ?
-              <AccountMenu /> :
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '20%' }}>
+                  <Box>
+                    <NotificationBell />
+                  </Box>
+                  <AccountMenu />
+
+                </Box> :
           <Button color="inherit" href='/login'>
                 Login
           </Button>}

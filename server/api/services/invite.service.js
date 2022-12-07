@@ -3,6 +3,7 @@ import UserModel from '../models/user.model.js';
 import _ from 'lodash';
 import AppError from '../utils/AppError.js';
 import httpStatus from 'http-status';
+import { sendMessageToClient } from '../../socket/connectionStore.js';
 
 /**
  * Get project invites
@@ -46,17 +47,20 @@ const getAllRecievedInvites = async (userId, type) => {
 /**
  * Send an invite
  */
-const sendInvite = async (userId, inviteInfo) => {
-  const user = await UserModel.findOne( { _id: inviteInfo.rUserID, isDeleted: false } );
-  const checkInvite = await InviteModel.find({ sUserID: userId, rUserID: inviteInfo.rUserID, type: inviteInfo.type, isDeleted: false });
+const sendInvite = async (sUser, inviteInfo) => {
+  const { rUserID, type } = inviteInfo;
+  const { _id, name } = sUser;
+  const user = await UserModel.findOne( { _id: rUserID, isDeleted: false } );
+  const checkInvite = await InviteModel.find({ sUserID: _id, rUserID, type, isDeleted: false });
 
   if (! _.isEmpty(checkInvite)) {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The invite already exists ${checkInvite._id}`);
   }
 
   if ( ! _.isEmpty(user) ) {
-    inviteInfo.sUserID = userId;
+    inviteInfo.sUserID = _id;
     const newInvite = await new InviteModel(inviteInfo);
+    await sendMessageToClient(rUserID, 'notification', `${name} sent you a roommate invite`);
     return newInvite.save();
   } else {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The recieving User does not exist`);

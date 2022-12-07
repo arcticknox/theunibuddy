@@ -4,6 +4,7 @@ import moment from 'moment';
 import TokenModel from '../models/token.model.js';
 import AppError from '../utils/AppError.js';
 import config from '../../config/index.js';
+import _ from 'lodash';
 
 /**
  * Generate JWT Token
@@ -59,6 +60,17 @@ const verifyToken = async (token, type) => {
 };
 
 /**
+ * Verify socket access token
+ * @param {String} token
+ * @returns {Object}
+ */
+const verifySocketAccessToken = async (token, id) => {
+  const payload = jwt.verify(token, config.jwt.publicKey, { algorithm: config.jwt.algorithm });
+  if (_.get(payload, 'sub') === id) return true;
+  return false;
+};
+
+/**
  * Generate access and refresh tokens
  * @param {String} userId
  * @return
@@ -101,4 +113,5 @@ export default {
   verifyToken,
   generateAuthTokens,
   generateEmailVerificationToken,
+  verifySocketAccessToken,
 };

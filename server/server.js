@@ -3,6 +3,13 @@ import mongoose from 'mongoose';
 import stoppable from 'stoppable';
 import app from './api/app.js';
 import centralErrorHandler from './api/utils/centralErrorHandler.js';
+import { initSocketServer } from './socket/index.js';
+import { socketConnectionStore } from './socket/connectionStore.js';
+import http from 'http';
+
+const httpServer = http.createServer(app);
+
+const io = initSocketServer(httpServer);
 
 const initMongoConn = () => {
   mongoose
@@ -16,16 +23,11 @@ const initMongoConn = () => {
 };
 
 const server = stoppable(
-    app.listen(config.app.port, () => {
+    httpServer.listen(config.app.port, () => {
       initMongoConn();
+      socketConnectionStore(io);
       console.log('Server listening on port', config.app.port);
-    }),
-);
-
-// Centralized error handler
-app.use((err, req, res, next) => {
-  centralErrorHandler(err, res);
-});
+    }));
 
 process.on('uncaughtException', (error) => {
   centralErrorHandler(error);
@@ -43,6 +45,7 @@ const shutdown = () => {
     }
     console.log('MongoDB gracefully disconnected');
     mongoose.connection.close();
+    io.close(); // Close socket conn
     process.exit();
   });
 };

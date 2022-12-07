@@ -17,7 +17,7 @@ const getAllRecievedInvites = catchAsync(async (req, res) => {
 
 const sendInvite = catchAsync(async (req, res) => {
   const { body } = req;
-  const status = await InviteService.sendInvite(req.user._id, body);
+  const status = await InviteService.sendInvite(req.user, body);
   responseHandler(res, { status });
 });
 

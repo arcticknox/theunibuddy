@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './AccountMenu.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 import {
   Popper,
   Grow,
@@ -17,8 +17,8 @@ import { logoutUser } from '../../redux/slices/authSlice';
 
 
 function AccountMenu() {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
   const refreshToken = useSelector((state) => state.auth.refreshToken.token);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ function AccountMenu() {
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }

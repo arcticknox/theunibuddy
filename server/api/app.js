@@ -9,6 +9,8 @@ import routes from './routes/index.js';
 import jwtStrategy from './utils/jwtStrategy.js';
 import errorHandlerMiddleware from './middlewares/error.middlware.js';
 import authMiddleware from './middlewares/auth.middleware.js';
+import { sendMessageToClient } from '../socket/connectionStore.js';
+import centralErrorHandler from './utils/centralErrorHandler.js';
 
 const app = express();
 
@@ -34,5 +36,16 @@ passport.use('jwt', jwtStrategy);
 app.use(authMiddleware);
 app.use(routes);
 app.use(errorHandlerMiddleware);
+
+// Centralized error handler
+app.use((err, req, res, next) => {
+  centralErrorHandler(err, res);
+});
+
+app.get('/send', async (req, res) => {
+  const id = req.query.id;
+  await sendMessageToClient(id, 'message', 'Message Sent');
+  res.send({ success: true });
+});
 
 export default app;
