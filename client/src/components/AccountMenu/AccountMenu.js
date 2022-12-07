@@ -1,5 +1,7 @@
 import * as React from 'react';
+import './AccountMenu.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
 import {
   Popper,
   Grow,
@@ -20,7 +22,6 @@ function AccountMenu() {
   const refreshToken = useSelector((state) => state.auth.refreshToken.token);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const dispatch = useDispatch();
-
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -94,8 +95,10 @@ function AccountMenu() {
                       aria-labelledby="composition-button"
                       onKeyDown={handleListKeyDown}
                     >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>Account</MenuItem>
+                      <a href='/account'><MenuItem onClick={handleClose}>
+                      Account</MenuItem></a>
+                      <a href='/profile'><MenuItem>
+                      Profile</MenuItem></a>
                       <MenuItem onClick={async () => await logoutUserAPI()}>
                         Logout
                       </MenuItem>
@@ -107,7 +110,6 @@ function AccountMenu() {
           </Popper>
         </div>
       </Stack>
-
     </div>
   );
 }

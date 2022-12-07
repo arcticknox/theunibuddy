@@ -23,6 +23,11 @@ export const authSlice = createSlice({
         state.refreshToken = action.payload.tokens.refresh;
       },
     },
+    setUserInfo: {
+      reducer: (state, action) => {
+        state.userInfo = action.payload;
+      },
+    },
     setIsLoggedIn: {
       reducer: (state, action) => {
         if (state.accessToken && state.userInfo) state.isLoggedIn = true;
@@ -40,6 +45,10 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthInfo, setIsLoggedIn, logoutUser } = authSlice.actions;
+export const {
+  setAuthInfo,
+  setUserInfo,
+  setIsLoggedIn,
+  logoutUser } = authSlice.actions;
 
 export default authSlice.reducer;

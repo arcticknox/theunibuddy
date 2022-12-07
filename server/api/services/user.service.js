@@ -7,7 +7,7 @@ import { splitDomainFromEmail } from '../utils/stringUtil.js';
 import { sendVerificationEmail } from './email.service.js';
 import TokenService from './token.service.js';
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcrypt';
 /**
  * Create user
  * @param {Object} userInfo: user info to be saved to create user
@@ -49,6 +49,7 @@ const fetchUserById = async (_id) => {
 const updateUser = async (_id, userInfo) => {
   if (userInfo.email) delete userInfo.email;
   const findBy = { '_id': mongoose.Types.ObjectId(_id) };
+  if (userInfo.password) userInfo.password = await bcrypt.hash(userInfo.password, 10);
   const updatedUserInfo = await UserModel.findOneAndUpdate(findBy, userInfo, { new: true });
   if (!updatedUserInfo) throw new AppError(httpStatus.BAD_REQUEST, 'Invalid user indentifier provided, update operation failed');
   return updatedUserInfo;

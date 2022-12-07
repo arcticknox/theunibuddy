@@ -63,7 +63,7 @@ function Navbar() {
             <Link href='/' underline='none' color={'white'}>UniBuddy</Link>
           </Typography>
           {isLoggedIn ?
-          <AccountMenu /> :
+              <AccountMenu /> :
           <Button color="inherit" href='/login'>
                 Login
           </Button>}
