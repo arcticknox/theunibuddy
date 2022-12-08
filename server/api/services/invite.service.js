@@ -52,7 +52,7 @@ const sendInvite = async (sUser, inviteInfo) => {
   const { rUserID, type } = inviteInfo;
   const { _id, name } = sUser;
   const user = await UserModel.findOne( { _id: rUserID, isDeleted: false } );
-  const checkInvite = await InviteModel.find({ sUserID: _id, rUserID, type, isDeleted: false });
+  const checkInvite = await InviteModel.find({ sUserID: _id, rUserID, type, isDeleted: false, status: 'pending' });
 
   if (! _.isEmpty(checkInvite)) {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The invite already exists ${checkInvite._id}`);

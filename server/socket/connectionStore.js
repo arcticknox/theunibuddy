@@ -43,6 +43,7 @@ const getClientFromStore = async (userId) => {
  */
 const sendMessageToClient = async (userId, event, message) => {
   const socket = await getClientFromStore(userId);
+  if (!socket) return;
   socket.emit(event, message);
 };
 
