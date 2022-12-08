@@ -3,13 +3,20 @@ import * as React from 'react';
 import './CreateRoom.scss';
 import { Container, Paper, TextField, Button,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import fetchAPI from '../../../../utils/fetchAPI';
+import { useLayoutEffect } from 'react';
+import { setUserRoom } from '../../../../redux/slices/userRoomSlice';
 
-function CreateRoom() {
+
+function CreateRoom(props) {
+  const dispatch = useDispatch();
+  const userRoom = useSelector((state) => state.userRoom.userRoom);
   const userInfo = useSelector((state) => state.auth.userInfo);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
+  const [editable, setEditable] = useState(false);
+
   const [values, setValues] = useState({
     ...userInfo,
     password: '',
@@ -17,7 +24,24 @@ function CreateRoom() {
     roomDetails: '',
     roomSize: 0,
   });
-  const [editable, setEditable] = useState(false);
+
+  const getUserRoom = async () => {
+    const response = await fetchAPI('http://localhost:8080/room/userRoom', 'GET', null, accessToken);
+    await dispatch(setUserRoom(response.data));
+    return response;
+  };
+
+  useLayoutEffect(()=>{
+    getUserRoom().then((response)=>{
+      if (response.data.userRoom[0].members && response.data.userRoom[0].members.length > 0) {
+        setValues({ ...values, roomDetails: response.data.userRoom[0].roomDesc, roomSize: response.data.userRoom[0].maxCount });
+        setEditable(true);
+      } else {
+        setEditable(false);
+      }
+    });
+  }, []);
+
 
   const handleChange =
           (prop) => (event) => {
@@ -25,6 +49,15 @@ function CreateRoom() {
           };
 
   const enableEdit = () => {
+    setEditable(!editable);
+  };
+
+  const updateRoom = async () => {
+    const body = {
+      details: values.roomDetails,
+      maxCount: values.roomSize,
+    };
+    await fetchAPI('http://localhost:8080/room', 'PUT', body, accessToken);
     setEditable(!editable);
   };
 
@@ -38,11 +71,29 @@ function CreateRoom() {
     setEditable(!editable);
   };
 
+  const callRoomApi = async () => {
+    // userRoom[0]
+    if (userRoom[0].members && userRoom[0].members.length > 0) {
+      await updateRoom();
+      props.onChange();
+    } else {
+      await createNewRoom();
+    }
+    /*
+    if (props.cardInfo.members && props.cardInfo.members.length > 0) {
+      await updateRoom();
+      props.onChange();
+    }
+    */
+  };
+
+
   return (
     <Container className='createRoom-container'>
       <Paper elevation={24} className='createRoom-main-paper'>
         <div>
           <h2>My Room Details</h2>
+          {console.log(userRoom[0])}
         </div>
         <div>
           <TextField
@@ -95,7 +146,7 @@ function CreateRoom() {
           enableEdit();
         }} className='edit-button' variant="outlined">Cancel</Button>}
           <Button onClick={() => {
-            createNewRoom();
+            callRoomApi();
           }} className='signup-button' variant="outlined">
                 Submit
           </Button></div>

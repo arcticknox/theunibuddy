@@ -22,7 +22,7 @@ router.put(
 );
 
 router.put(
-    '/:roomId',
+    '/',
     requestValidatorMiddleware(roomValidations.updateRoom),
     roomController.updateRoom,
 );

@@ -28,10 +28,10 @@ function UserRoom() {
     <div>
       {
         <div>
-          <CreateRoom />
+          <CreateRoom cardInfo = {userRoom[0]} onChange = {getUserRoom}/>
         </div>
       }
-      {userRoom && userRoom.length && userRoom[0].members.length>1 &&
+      {userRoom && userRoom.length && userRoom[0].members.length>0 &&
         <Container width="100%" className='filter-container'>
           <Paper elevation={24} className='filter-main-paper'>
             <br/>
@@ -40,7 +40,7 @@ function UserRoom() {
             </div>
             <br/>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
-              {userRoom[0].members.length>1 && userRoom[0].members.map( (listing, index)=>{
+              {userRoom[0].members.length>0 && userRoom[0].members.map( (listing, index)=>{
                 return (
                   <Paper key={index} elevation={24}>
                     <MemberCard cardInfo = {userRoom[0]} member = {listing}/>

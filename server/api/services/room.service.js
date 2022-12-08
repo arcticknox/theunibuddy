@@ -33,16 +33,16 @@ const getRooms = async () => {
 
 /**
  * Update Room
- * @param {String} roomId
+ * @param {String} memberId
  * @param {Object} roomInfo
  */
-const updateRoom = async (roomId, roomInfo) => {
-  const room = await RoomModel.findById(roomId);
+const updateRoom = async (memberId, roomInfo) => {
+  const room = await RoomModel.findOne( { members: memberId, isDeleted: false } );
   if (! _.isEmpty(room)) {
-    const status = await RoomModel.updateOne( { _id: roomId, isDeleted: false }, { $set: roomInfo } );
+    const status = await RoomModel.updateOne( { _id: room._id, isDeleted: false }, { $set: roomInfo } );
     return status;
   } else {
-    throw new AppError(httpStatus.BAD_REQUEST, `Error: The room ${roomId} does not exist`);
+    throw new AppError(httpStatus.BAD_REQUEST, `Error: The room for user ${memberId} does not exist`);
   }
 };
 

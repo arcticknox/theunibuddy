@@ -30,7 +30,7 @@ const getRooms = catchAsync(async (req, res) => {
  */
 const updateRoom = catchAsync(async (req, res) => {
   const { body } = req;
-  const room = await RoomService.updateRoom(req.params.roomId, body);
+  const room = await RoomService.updateRoom(req.user._id, body);
   responseHandler(res, { room });
 });
 
