@@ -59,12 +59,12 @@ function MemberCard(props) {
         <Typography gutterBottom variant="h5" component="div">
           {props.member[0]}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" align='left'>
           Room Bio: {props.cardInfo.roomDesc !== ''? props.cardInfo.roomDesc : 'No Details'}
           <div>
             {props.cardInfo.members.length > 0 &&
                 <div>
-                    Max Roomate: {props.cardInfo.maxCount}
+                    Spots Left: {props.cardInfo.maxCount - props.cardInfo.members.length}
                 </div>
             }
             {props.cardInfo.members.length === 0 &&
@@ -72,9 +72,7 @@ function MemberCard(props) {
                     Room does not exist
                 </div>
             }
-
           </div>
-
         </Typography>
       </CardContent>
       {
@@ -96,8 +94,24 @@ function MemberCard(props) {
                 {userInfo.name}
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Email: {userInfo.email}
+                <div>
+                  Email: {userInfo.email}
+                </div>
+                <div>
+                  Mobile: {userInfo.mobile}
+                </div>
+                <div>
+                  Program: {userInfo.program}
+                </div>
+                <div>
+                  Gender Pref: {userInfo.roommateGenderPreference}
+                </div>
+                <div>
+                  Food Pref: {userInfo.dietaryPreference}
+                </div>
               </Typography>
+              <br/>
+              <Button variant="outlined" >View Details</Button>
             </Box>
           </Modal>
           {props.member[0]=== props.cardInfo.members[0][0] &&
@@ -111,7 +125,6 @@ function MemberCard(props) {
             removeUser();
           }} size="small">Remove</Button>
           }
-
         </div>
         }
         {props.cardInfo.members.length === 0 &&
@@ -124,6 +137,40 @@ function MemberCard(props) {
       {
         props.type === 'read' &&
         <CardActions>
+          <Button onClick={()=>{
+            getUserInfo();
+          }} size="small">View Profile</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {userInfo.name}
+                {console.log(userInfo)}
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <div>
+                  Email: {userInfo.email}
+                </div>
+                <div>
+                  Mobile: {userInfo.mobile}
+                </div>
+                <div>
+                  Program: {userInfo.program}
+                </div>
+                <div>
+                  Gender Pref: {userInfo.roommateGenderPreference}
+                </div>
+                <div>
+                  Food Pref: {userInfo.dietaryPreference}
+                </div>
+
+              </Typography>
+            </Box>
+          </Modal>
           <Button onClick={()=>{
             sendRequest();
           }} size="small">Request</Button>
