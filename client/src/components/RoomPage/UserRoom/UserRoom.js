@@ -11,7 +11,6 @@ import { Paper,
 
 function UserRoom() {
   const accessToken = useSelector((state) => state.auth.accessToken.token);
-  const userInfo = useSelector((state) => state.auth.userInfo);
   const userRoom = useSelector((state) => state.userRoom.userRoom);
   const dispatch = useDispatch();
   const getUserRoom = async () => {
@@ -28,12 +27,11 @@ function UserRoom() {
 
     <div>
       {
-        // userRoom[0].members.length > 0 && userRoom[0].members[0][1] === userInfo._id &&
         <div>
           <CreateRoom />
         </div>
       }
-      {userRoom[0].members.length>1 &&
+      {userRoom && userRoom.length && userRoom[0].members.length>1 &&
         <Container width="100%" className='filter-container'>
           <Paper elevation={24} className='filter-main-paper'>
             <br/>
