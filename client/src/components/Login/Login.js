@@ -95,7 +95,7 @@ function Login() {
           }} className='login-button' variant="outlined">
                     Login
           </Button>
-          <Link style={{ textDecoration: 'none' }} to='/signup'>
+          <Link className='signup-link' to='/signup'>
             <Button className='signup-button' variant="outlined">
                 Sign Up
             </Button></Link>

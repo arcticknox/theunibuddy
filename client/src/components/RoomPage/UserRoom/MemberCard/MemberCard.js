@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './MemberCard.scss';
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -46,7 +47,7 @@ function MemberCard(props) {
     handleOpen();
   };
 
-  const style = {
+  const muiBoxStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -101,7 +102,7 @@ function MemberCard(props) {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
+            <Box sx={muiBoxStyle}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 {userInfo.name}
               </Typography>
@@ -158,7 +159,7 @@ function MemberCard(props) {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
+            <Box sx={muiBoxStyle}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 {userInfo.name}
               </Typography>

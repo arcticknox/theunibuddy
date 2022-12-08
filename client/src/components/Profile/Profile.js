@@ -1,4 +1,5 @@
 // /* eslint-disable max-len */
+import './Profile.scss';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -21,7 +22,7 @@ function ProfilePage() {
   };
   const userInfo = useSelector((state) => state.auth.userInfo);
   return (
-    <section style={{ backgroundColor: '#eee' }}>
+    <section className='profile-section'>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol>
@@ -31,7 +32,6 @@ function ProfilePage() {
                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: '150px' }}
                   fluid />
                 <p className="text-muted mb-1">{userInfo.name}</p>
                 <p className="text-muted mb-4">{userInfo.country}</p>

@@ -10,7 +10,7 @@ function Home() {
   return (
     <Box sx={{ flexGrow: 1, padding: '5%', display: 'flex',
       justifyContent: 'center', gap: '5%' }}>
-      <Link to='/roommate' style={{ textDecoration: 'none' }} underline='none' color={'white'}>
+      <Link to='/roommate' className='home-link-class' underline='none'>
         <HomeTile title={'Roommate Finder'} type={'roommate'}/>
       </Link>
 

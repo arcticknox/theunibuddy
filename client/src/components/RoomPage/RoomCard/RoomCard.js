@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './RoomCard.scss';
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -59,7 +60,7 @@ function RoomCard(props) {
       <CardActions>
         {props.cardInfo.members.length > 0 &&
         <div>
-          <Link to='/view-room' state={{ userId: props.cardInfo.members[0][1] }} style={{ textDecoration: 'none' }} underline='none' color={'white'}>
+          <Link to='/view-room' state={{ userId: props.cardInfo.members[0][1] }} className='link-view-room' underline='none' color={'white'}>
             <Button size="small">View Room</Button>
           </Link>
           <Button onClick={()=>{
