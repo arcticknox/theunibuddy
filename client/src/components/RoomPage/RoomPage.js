@@ -30,12 +30,11 @@ function RoomPage() {
   };
 
 
-  const [values, setValues] = useState({ initialFilterState });
+  const [values, setValues] = useState(initialFilterState);
 
   const applyFilter = async () => {
     const response = await fetchAPI(`http://localhost:8080/room/listings?rentBudgetLimit=${values.rentBudgetLimit}&dietaryPreference=${values.dietaryPreference}&roommateGenderPreference=${values.roommateGenderPreference}&program=${values.program}&intake=${values.intake}&studyLevel=${values.studyLevel}&pageNumber=1&nPerPage=10`, 'GET', null, accessToken);
     dispatch(setUsersList(response.data.listingData));
-    setValues(initialFilterState);
     return response;
   };
 
@@ -167,9 +166,13 @@ function RoomPage() {
                   <MenuItem value={'PhD'}>PhD</MenuItem>
                 </Select>
               </FormControl>
-              <Button variant="outlined" className='apply-filter' onClick={async () => {
+              <Button variant="contained" className='apply-filter' onClick={async () => {
                 await applyFilter();
               }}>Apply</Button>
+              <Button variant="outlined" className='clear-filter' onClick={async () => {
+                setValues(initialFilterState);
+                await applyFilter();
+              }}>Clear</Button>
             </div>
             <br />
           </Paper>
