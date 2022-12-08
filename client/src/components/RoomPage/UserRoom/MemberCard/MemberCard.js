@@ -1,20 +1,21 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import BoyAvatar from '../../RoomCard/boyAvatar.png';
 import fetchAPI from '../../../../utils/fetchAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { setUserInfo } from '../../../../redux/slices/userRoomSlice';
+import memberIcon from '../../RoomCard/memberIcon.png';
 
 function MemberCard(props) {
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false);
+  const [avatarElevation, setAvatarElevation] = useState(4);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
@@ -47,13 +48,13 @@ function MemberCard(props) {
   };
 
   return (
-    <Card sx={{ width: 300, height: 300 }}>
-      <CardMedia
-        component="img"
+    <Card sx={{ width: 300, height: 300, padding: '5%', textAlign: 'center' }} elevation={avatarElevation}
+      onMouseOver={ () => setAvatarElevation(24) }
+      onMouseOut={() => setAvatarElevation(4)}>
+      <img
         alt="listing card"
-        height="140"
-        width="100"
-        image={BoyAvatar}
+        width='40%'
+        src={memberIcon}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -149,7 +150,6 @@ function MemberCard(props) {
             <Box sx={style}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 {userInfo.name}
-                {console.log(userInfo)}
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 <div>
@@ -171,9 +171,9 @@ function MemberCard(props) {
               </Typography>
             </Box>
           </Modal>
-          <Button onClick={()=>{
+          {props.member[0] !== props.cardInfo.members[0][0] && <Button onClick={()=>{
             sendRequest();
-          }} size="small">Request</Button>
+          }} size="small">Request</Button>}
         </CardActions>
       }
     </Card>

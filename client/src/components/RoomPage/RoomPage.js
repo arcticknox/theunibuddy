@@ -56,7 +56,7 @@ function RoomPage() {
         <Container width="100%" className='filter-container'>
           <Paper elevation={24} className='filter-main-paper'>
             <div>
-              <h2>Search Filter</h2>
+              <h2><b>Search Filter</b></h2>
             </div>
             <div>
               <FormControl sx={{ m: 1, width: '20ch' }}>
@@ -180,23 +180,21 @@ function RoomPage() {
       </div>
       <br/>
       <Container width="100%" className='filter-container'>
-        <Paper elevation={24} className='filter-main-paper'>
-          <br/>
-          <div>
-            <h2>User Listings</h2>
-          </div>
-          <br/>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
-            {usersList && usersList.length ? usersList.map( (listing, index)=>{
-              return (
+        <br/>
+        <div>
+          <h2><b>User Listings</b></h2>
+        </div>
+        <br/>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
+          {usersList && usersList.length ? usersList.map( (listing, index)=>{
+            return (
 
-                <Paper key={index} elevation={24}>
-                  <RoomCard cardInfo = {listing}/>
-                </Paper>
-              );
-            } ): 'No listing'}
-          </Box>
-        </Paper>
+              <Paper key={index} elevation={24}>
+                <RoomCard cardInfo = {listing}/>
+              </Paper>
+            );
+          } ): 'No listing'}
+        </Box>
       </Container>
     </div>
 
