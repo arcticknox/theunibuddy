@@ -4,7 +4,7 @@ import RoomCard from './RoomCard/RoomCard';
 import { Box } from '@mui/system';
 import fetchAPI from '../../utils/fetchAPI';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAllListings } from '../../redux/slices/listingSlice';
+import { setUsersList } from '../../redux/slices/listingSlice';
 import { Container, Paper, FormControl,
   OutlinedInput, InputAdornment, InputLabel, Button,
 } from '@mui/material';
@@ -23,12 +23,9 @@ const initialFilterState = {
 function RoomPage() {
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const dispatch = useDispatch();
-  const userListings = useSelector((state) => state.listing.users);
+  const usersList = useSelector((state) => state.listing.usersList);
   const getAllListings = async () => {
-    console.log('******* getAllListings **********');
     const response = await fetchAPI('http://localhost:8080/room/listings?pageNumber=1&nPerPage=10`', 'GET', null, accessToken);
-    // console.log(response);
-    dispatch(setAllListings(response.data));
     return response;
   };
 
@@ -37,7 +34,7 @@ function RoomPage() {
 
   const applyFilter = async () => {
     const response = await fetchAPI(`http://localhost:8080/room/listings?rentBudgetLimit=${values.rentBudgetLimit}&dietaryPreference=${values.dietaryPreference}&roommateGenderPreference=${values.roommateGenderPreference}&program=${values.program}&intake=${values.intake}&studyLevel=${values.studyLevel}&pageNumber=1&nPerPage=10`, 'GET', null, accessToken);
-    dispatch(setAllListings(response.data));
+    dispatch(setUsersList(response.data.listingData));
     setValues(initialFilterState);
     return response;
   };
@@ -47,8 +44,10 @@ function RoomPage() {
           setValues({ ...values, [prop]: event.target.value });
         };
 
-  useEffect( ()=>{
-    getAllListings();
+  useEffect(()=>{
+    getAllListings().then((res) => {
+      dispatch(setUsersList(res.data.listingData));
+    });
   }, [] );
 
   return (
@@ -184,21 +183,15 @@ function RoomPage() {
             <h2>User Listings</h2>
           </div>
           <br/>
-          {console.log('**** User Listings ***', userListings)}
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
-            {userListings.map( (listing, index)=>{
+            {usersList && usersList.length ? usersList.map( (listing, index)=>{
               return (
+
                 <Paper key={index} elevation={24}>
                   <RoomCard cardInfo = {listing}/>
                 </Paper>
               );
-            } )}
-            {userListings.map( (listing, index)=>{
-              return (
-                <div key={index}>
-                  <RoomCard cardInfo = {listing}/>
-                </div> );
-            } )}
+            } ): 'No listing'}
           </Box>
         </Paper>
       </Container>

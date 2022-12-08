@@ -147,11 +147,11 @@ const getListings = async (filter, pageNumber = 0, nPerPage = 10) => {
       }
     });
   }
-  console.log(findBy);
+  let listingData = [];
   const userList = await UserModel.find(findBy).sort({ _id: 1 }).skip(pageNumber > 0 ? ( ( pageNumber - 1 ) * nPerPage ) : 0 ).limit( nPerPage );
   const total = userList.length;
   if (! _.isEmpty(userList)) {
-    const listingData = await Promise.all(
+    listingData = await Promise.all(
         userList.map(async (user)=>{
           const name = user._doc.name;
           const room = await RoomModel.findOne( { members: user._doc._id, isDeleted: false } );
@@ -176,13 +176,13 @@ const getListings = async (filter, pageNumber = 0, nPerPage = 10) => {
           });
         }),
     );
-    return {
-      listingData: listingData.length ? listingData : {},
-      pageNumber,
-      nPerPage,
-      total,
-    };
   }
+  return {
+    listingData: listingData.length ? listingData : [],
+    pageNumber,
+    nPerPage,
+    total,
+  };
 };
 
 const getUserRoom = async (userId) => {
