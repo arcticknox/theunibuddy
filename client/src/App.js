@@ -25,23 +25,18 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route path='/'
-            element={<PrivateRoute><Home /></PrivateRoute>}></Route>
-          <Route path='/profile'
-            element={<PrivateRoute><Profile /></PrivateRoute>}></Route>
-          <Route path='/account'
-            element={<PrivateRoute><Account /></PrivateRoute>}></Route>
+          <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>}></Route>
+          <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>}></Route>
+          <Route path='/account'element={<PrivateRoute><Account /></PrivateRoute>}></Route>
           <Route element={<Login />} path={'/login'}></Route>
           <Route element={<SignUp />} path={'/signup'}></Route>
           <Route element={<PasswordReset />} path={'/passwordreset'}></Route>
           <Route element={<PrivateRoute><RoomPage /></PrivateRoute>} path={'/roommate'}></Route>
           <Route element={<PrivateRoute><Blogs /></PrivateRoute>} path={'/blogs'}></Route>
-          <Route element={<Home />} path={'/home'}></Route>
-          <Route element={<UserRoom />} path={'/user-room'}></Route>
-          <Route element={<ViewRoom />} path={'/view-room'}></Route>
-          <Route path='/invitations'
-            element={<PrivateRoute><Invitations /></PrivateRoute>}></Route>
-          <Route element={<Account />} path={'/account'}></Route>
+          <Route element={<PrivateRoute><UserRoom /></PrivateRoute>} path={'/user-room'}></Route>
+          <Route element={<PrivateRoute><ViewRoom /></PrivateRoute>} path={'/view-room'}></Route>
+          <Route path='/invitations' element={<PrivateRoute><Invitations /></PrivateRoute>}></Route>
+          <Route element={<PrivateRoute><Account /></PrivateRoute>} path={'/account'}></Route>
         </Routes>
       </BrowserRouter>
     </div>
