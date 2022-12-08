@@ -28,7 +28,7 @@ function Login() {
       email: values.email,
       password: values.password,
     };
-    const response = await fetchAPI('http://localhost:8080/auth/login', 'post', body);
+    const response = await fetchAPI('/auth/login', 'post', body);
     dispatch(setAuthInfo(response.data));
     dispatch(setIsLoggedIn());
   };

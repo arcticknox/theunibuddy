@@ -9,7 +9,7 @@ import fetchAPI from '../../../../utils/fetchAPI';
 import { useLayoutEffect } from 'react';
 import { setUserRoom } from '../../../../redux/slices/userRoomSlice';
 
-
+// Create room api call
 function CreateRoom(props) {
   const dispatch = useDispatch();
   const userRoom = useSelector((state) => state.userRoom.userRoom);
@@ -25,13 +25,14 @@ function CreateRoom(props) {
     roomSize: 0,
   });
 
+  // Get user room api call
   const getUserRoom = async () => {
-    const response = await fetchAPI('http://localhost:8080/room/userRoom', 'GET', null, accessToken);
+    const response = await fetchAPI('/room/userRoom', 'GET', null, accessToken);
     await dispatch(setUserRoom(response.data));
     return response;
   };
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
     getUserRoom().then((response)=>{
       if (response.data.userRoom[0].members && response.data.userRoom[0].members.length > 0) {
         setValues({ ...values, roomDetails: response.data.userRoom[0].roomDesc, roomSize: response.data.userRoom[0].maxCount });
@@ -44,9 +45,9 @@ function CreateRoom(props) {
 
 
   const handleChange =
-          (prop) => (event) => {
-            setValues({ ...values, [prop]: event.target.value });
-          };
+    (prop) => (event) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
   const enableEdit = () => {
     setEditable(!editable);
@@ -57,7 +58,7 @@ function CreateRoom(props) {
       details: values.roomDetails,
       maxCount: values.roomSize,
     };
-    await fetchAPI('http://localhost:8080/room', 'PUT', body, accessToken);
+    await fetchAPI('/room', 'PUT', body, accessToken);
     setEditable(!editable);
   };
 
@@ -67,7 +68,7 @@ function CreateRoom(props) {
       details: values.roomDetails,
       maxCount: values.roomSize,
     };
-    await fetchAPI('http://localhost:8080/room', 'POST', body, accessToken);
+    await fetchAPI('/room', 'POST', body, accessToken);
     setEditable(!editable);
     getUserRoom();
   };
@@ -80,7 +81,6 @@ function CreateRoom(props) {
       await createNewRoom();
     }
   };
-
 
   return (
     <Container className='createRoom-container'>

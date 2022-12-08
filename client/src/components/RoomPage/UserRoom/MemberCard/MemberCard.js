@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import { setUserInfo, setUserRoom } from '../../../../redux/slices/userRoomSlice';
 import memberIcon from '../../RoomCard/memberIcon.png';
 
-
+// Member card component
 function MemberCard(props) {
   const dispatch = useDispatch();
   const [avatarElevation, setAvatarElevation] = useState(4);
@@ -21,24 +21,27 @@ function MemberCard(props) {
   const handleClose = () => setOpen(false);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const userInfo = useSelector((state) => state.userRoom.userInfo );
-  const removeUser = async ()=>{
+  // Remove user api call
+  const removeUser = async () => {
     const body = {
       sUserID: '',
       rUserID: props.cardInfo.members[0][1],
       type: 'room',
     };
-    await fetchAPI(`http://localhost:8080/room/kickMember/${props.member[1]}`, 'DELETE', body, accessToken);
+    await fetchAPI(`/room/kickMember/${props.member[1]}`, 'DELETE', body, accessToken);
     getUserRoom();
   };
 
+  // Get user room api call
   const getUserRoom = async () => {
-    const response = await fetchAPI('http://localhost:8080/room/userRoom', 'GET', null, accessToken);
+    const response = await fetchAPI('/room/userRoom', 'GET', null, accessToken);
     dispatch(setUserRoom(response.data));
     return response;
   };
 
+  // Get user info api call
   const getUserInfo = async () =>{
-    const response = await fetchAPI(`http://localhost:8080/user/${props.member[1]}`, 'GET', null, accessToken);
+    const response = await fetchAPI(`/user/${props.member[1]}`, 'GET', null, accessToken);
     dispatch(setUserInfo(response));
     handleOpen();
   };
@@ -187,4 +190,5 @@ function MemberCard(props) {
     </Card>
   );
 }
+
 export default MemberCard;

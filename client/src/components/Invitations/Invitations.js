@@ -17,7 +17,7 @@ function Invitations() {
 
   // Fetch received invitations api call
   const fetchInvitations = async () => {
-    const response = await fetchAPI('http://localhost:8080/invite/recieved/room', 'GET', null, accessToken);
+    const response = await fetchAPI('/invite/recieved/room', 'GET', null, accessToken);
     return _.get(response, 'data.invites');
   };
 

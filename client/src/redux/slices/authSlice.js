@@ -1,11 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import fetchAPI from '../../utils/fetchAPI';
-
-export const loginWithEmail = createAsyncThunk(
-    'posts/fetchPosts', async (body) => {
-      const response = await fetchAPI('/auth/login', 'POST', body);
-      return response;
-    });
+import { createSlice } from '@reduxjs/toolkit';
 
 export const authSlice = createSlice({
   name: 'auth',

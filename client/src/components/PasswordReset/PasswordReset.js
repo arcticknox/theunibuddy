@@ -31,7 +31,7 @@ function PasswordReset() {
     const body = {
       email,
     };
-    const response = await fetchAPI('http://localhost:8080/auth/password-reset', 'post', body);
+    const response = await fetchAPI('/auth/password-reset', 'post', body);
     if (response.success) {
       setEmailDisabled(true);
       setInputOTP(true);
@@ -49,7 +49,7 @@ function PasswordReset() {
       otp: values.otp,
       newPassword: values.password,
     };
-    const response = await fetchAPI('http://localhost:8080/auth/verify-password-reset', 'put', body);
+    const response = await fetchAPI('/auth/verify-password-reset', 'put', body);
     if (response.success) {
       setOtpError(false);
       setOtpHelperText('');

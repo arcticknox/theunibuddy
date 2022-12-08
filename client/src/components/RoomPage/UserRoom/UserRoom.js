@@ -9,22 +9,23 @@ import { Paper,
   Container,
 } from '@mui/material';
 
+// User room component
 function UserRoom() {
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const userRoom = useSelector((state) => state.userRoom.userRoom);
   const dispatch = useDispatch();
+  // Get users api call
   const getUserRoom = async () => {
-    const response = await fetchAPI('http://localhost:8080/room/userRoom', 'GET', null, accessToken);
+    const response = await fetchAPI('/room/userRoom', 'GET', null, accessToken);
     dispatch(setUserRoom(response.data));
     return response;
   };
-
+  // Fetch on mount
   useEffect( ()=>{
     getUserRoom();
   }, [] );
 
   return (
-
     <div>
       {
         <div>
@@ -53,4 +54,5 @@ function UserRoom() {
     </div>
   );
 }
+
 export default UserRoom;

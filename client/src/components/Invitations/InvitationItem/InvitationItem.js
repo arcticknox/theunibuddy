@@ -13,13 +13,13 @@ function InvitationItem(props) {
   const { inviteInfo: { name, universityName, _id } } = props;
   // Accept Invite
   const acceptInvitationAPI = async () => {
-    const response = await fetchAPI(`http://localhost:8080/invite/accept/${_id}`, 'PUT', { type: 'room' }, accessToken);
+    const response = await fetchAPI(`/invite/accept/${_id}`, 'PUT', { type: 'room' }, accessToken);
     dispatch(removeFromReceivedList(_id));
     return response;
   };
   // Reject Invite
   const declineInvitationAPI = async () => {
-    const response = await fetchAPI(`http://localhost:8080/invite/reject/${_id}`, 'PUT', { type: 'room' }, accessToken);
+    const response = await fetchAPI(`/invite/reject/${_id}`, 'PUT', { type: 'room' }, accessToken);
     dispatch(removeFromReceivedList(_id));
     return response;
   };

@@ -15,7 +15,7 @@ function ViewRoom(props) {
   const userRoom = useSelector((state) => state.userRoom.userRoomId);
   const dispatch = useDispatch();
   const getUserRoommates = async () => {
-    const response = await fetchAPI(`http://localhost:8080/room/userRoomId/${userId}`, 'GET', null, accessToken);
+    const response = await fetchAPI(`/room/userRoomId/${userId}`, 'GET', null, accessToken);
     dispatch(setUserRoomId(response.data));
     return response;
   };

@@ -1,11 +1,13 @@
 /**
  * Fetch API
- * @param {String} url
+ * @param {String} path
  * @param {String} method
  * @param {Object} body
  * @returns
  */
-const fetchAPI = async (url, method = 'GET', body, accessToken) => {
+const fetchAPI = async (path, method = 'GET', body, accessToken) => {
+  const baseUrl = process.env.REACT_APP_APPSERVER_PATH;
+  const url = baseUrl ? baseUrl + path : 'http://localhost:8080' + path;
   const options = {
     method,
     cache: 'no-cache',

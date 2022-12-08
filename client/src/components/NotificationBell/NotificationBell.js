@@ -38,7 +38,7 @@ function NotificationBell() {
 
   // Subscribe socket connection
   useEffect(() => {
-    const socketConn = io(`http://${window.location.hostname}:8080`);
+    const socketConn = io(process.env.REACT_APP_SOCKET_URL);
     subscribeSocket(userInfo, socketConn, accessToken);
     // Listen for notification event sent from server
     socketConn.on('notification', (payload) => {

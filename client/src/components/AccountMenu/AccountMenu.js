@@ -48,7 +48,7 @@ function AccountMenu() {
 
   // User logout api call
   const logoutUserAPI = async () => {
-    await fetchAPI('http://localhost:8080/auth/logout', 'POST', { refreshToken }, accessToken);
+    await fetchAPI('/auth/logout', 'POST', { refreshToken }, accessToken);
     dispatch(logoutUser());
   };
 

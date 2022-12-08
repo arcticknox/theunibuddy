@@ -12,17 +12,18 @@ import {
   Link,
 } from 'react-router-dom';
 
+// Room Card component
 function RoomCard(props) {
   const [avatarElevation, setAvatarElevation] = useState(4);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
+  // Invite send api call
   const sendRequest = async ()=>{
     const body = {
       sUserID: '',
       rUserID: props.cardInfo.members[0][1],
       type: 'room',
     };
-    const response = await fetchAPI('http://localhost:8080/invite/send', 'POST', body, accessToken);
-    console.log('sendRequest', response);
+    await fetchAPI('/invite/send', 'POST', body, accessToken);
   };
 
   return (
@@ -52,9 +53,7 @@ function RoomCard(props) {
                     Room does not exist
                 </div>
             }
-
           </div>
-
         </Typography>
       </CardContent>
       <CardActions>

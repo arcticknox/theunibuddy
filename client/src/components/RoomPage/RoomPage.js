@@ -20,28 +20,30 @@ const initialFilterState = {
   studyLevel: '',
 };
 
+// Room Page component
 function RoomPage() {
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const dispatch = useDispatch();
   const usersList = useSelector((state) => state.listing.usersList);
+  // Get roommate listings
   const getAllListings = async () => {
-    const response = await fetchAPI('http://localhost:8080/room/listings?pageNumber=1&nPerPage=10`', 'GET', null, accessToken);
+    const response = await fetchAPI('/room/listings?pageNumber=1&nPerPage=10`', 'GET', null, accessToken);
     return response;
   };
 
-
   const [values, setValues] = useState(initialFilterState);
 
+  // Filters api call
   const applyFilter = async () => {
-    const response = await fetchAPI(`http://localhost:8080/room/listings?rentBudgetLimit=${values.rentBudgetLimit}&dietaryPreference=${values.dietaryPreference}&roommateGenderPreference=${values.roommateGenderPreference}&program=${values.program}&intake=${values.intake}&studyLevel=${values.studyLevel}&pageNumber=1&nPerPage=10`, 'GET', null, accessToken);
+    const response = await fetchAPI(`/room/listings?rentBudgetLimit=${values.rentBudgetLimit}&dietaryPreference=${values.dietaryPreference}&roommateGenderPreference=${values.roommateGenderPreference}&program=${values.program}&intake=${values.intake}&studyLevel=${values.studyLevel}&pageNumber=1&nPerPage=10`, 'GET', null, accessToken);
     dispatch(setUsersList(response.data.listingData));
     return response;
   };
 
   const handleChange =
-        (prop) => (event) => {
-          setValues({ ...values, [prop]: event.target.value });
-        };
+    (prop) => (event) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
   useEffect(()=>{
     getAllListings().then((res) => {
@@ -56,7 +58,7 @@ function RoomPage() {
         <Container width="100%" className='filter-container'>
           <Paper elevation={24} className='filter-main-paper'>
             <div>
-              <h2><b>Search Filter</b></h2>
+              <h5><b>Search Filter</b></h5>
             </div>
             <div>
               <FormControl sx={{ m: 1, width: '20ch' }}>
@@ -182,7 +184,7 @@ function RoomPage() {
       <Container width="100%" className='filter-container'>
         <br/>
         <div>
-          <h2><b>User Listings</b></h2>
+          <h2><b>Roommate Finder</b></h2>
         </div>
         <br/>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
