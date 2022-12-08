@@ -69,10 +69,7 @@ function Account() {
       linkedIn: values.linkedIn,
     };
     if (values.password !== '') body.password = values.password;
-    console.log('accessToken', accessToken);
-    console.log('edituserdetails', body);
     const response = await fetchAPI(`/user/${userInfo._id}`, 'PUT', body, accessToken.token);
-    console.log('response', response);
     dispatch(setUserInfo(response.data));
     enableEdit();
   };

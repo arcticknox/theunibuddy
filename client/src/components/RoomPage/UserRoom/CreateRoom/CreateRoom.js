@@ -87,7 +87,6 @@ function CreateRoom(props) {
       <Paper elevation={24} className='createRoom-main-paper'>
         <div>
           <h2>My Room Details</h2>
-          {console.log(userRoom[0])}
         </div>
         <div>
           <TextField

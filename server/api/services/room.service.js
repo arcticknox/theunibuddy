@@ -135,7 +135,6 @@ const getListings = async (filter, pageNumber = 0, nPerPage = 10) => {
   if (!_.isEmpty(filter)) {
     filter = _.omitBy(filter, _.isEmpty);
     filter = _.omitBy(filter, (key, value)=> key === 'undefined');
-    console.log(filter);
     const filterKeys = _.keys(filter);
     _.map(filterKeys, (key)=>{
       switch (key) {
