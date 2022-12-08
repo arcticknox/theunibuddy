@@ -15,6 +15,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Divider,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ import LivingIcon from '@mui/icons-material/Living';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import NotificationBell from '../NotificationBell/NotificationBell';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const drawerListData = [
   {
@@ -93,6 +95,12 @@ function Navbar(props) {
         open={drawerState}
         onClose={() => setDrawerState(false)}
       >
+        <div className='drawer-close-icon'>
+          <IconButton onClick={() => setDrawerState(false)}>
+            <ChevronLeftIcon fontSize='medium'/>
+          </IconButton>
+        </div>
+        <Divider />
         <Box
           sx={{ width: 250 }}
           role="presentation"

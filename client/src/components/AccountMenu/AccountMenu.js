@@ -10,6 +10,7 @@ import {
   MenuList,
   MenuItem,
   Stack,
+  IconButton,
 } from '@mui/material';
 import fetchAPI from '../../utils/fetchAPI';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,13 +64,14 @@ function AccountMenu() {
     <div>
       <Stack direction="row" spacing={2}>
         <div>
-          <AccountCircleIcon fontSize='large'
-            ref={anchorRef}
-            id="composition-button"
-            aria-controls={open ? 'composition-menu' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleToggle}/>
+          <IconButton onClick={handleToggle} color='inherit'>
+            <AccountCircleIcon fontSize='large'
+              ref={anchorRef}
+              id="composition-button"
+              aria-controls={open ? 'composition-menu' : undefined}
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"/>
+          </IconButton>
 
           <Popper
             open={open}

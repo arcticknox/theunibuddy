@@ -2,7 +2,7 @@ import './NotificationBell.scss';
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Badge, Popper, Paper,
-  Box, Fade, Divider, Button } from '@mui/material';
+  Box, Fade, Divider, Button, IconButton } from '@mui/material';
 import io from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -66,15 +66,16 @@ function NotificationBell() {
   return (
     <div>
 
-      <Badge color="secondary"
+      <Badge color="success"
         variant="dot" overlap="circular" invisible={!newNotification}>
-        <NotificationsIcon fontSize='large'
-          ref={anchorRef}
-          id="composition-button"
-          aria-controls={open ? 'composition-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}/>
+        <IconButton onClick={handleToggle} color='inherit'>
+          <NotificationsIcon fontSize='large'
+            ref={anchorRef}
+            id="composition-button"
+            aria-controls={open ? 'composition-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"/>
+        </IconButton>
 
       </Badge>
       <Popper
