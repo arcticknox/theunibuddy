@@ -16,6 +16,7 @@ import {
 // Room Card component
 function RoomCard(props) {
   const [avatarElevation, setAvatarElevation] = useState(4);
+  const userInfo = useSelector((state) => state.auth.userInfo);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   // Invite send api call
   const sendRequest = async ()=>{
@@ -63,9 +64,14 @@ function RoomCard(props) {
           <Link to='/view-room' state={{ userId: props.cardInfo.members[0][1] }} className='link-view-room' underline='none' color={'white'}>
             <Button size="small">View Room</Button>
           </Link>
-          <Button onClick={()=>{
-            sendRequest();
-          }} size="small">Join Room</Button>
+          {userInfo.name !== props.cardInfo.members[0][0] &&
+              <Button onClick={()=>{
+                sendRequest();
+              }} size="small">Join Room</Button>
+          }
+          {userInfo.name === props.cardInfo.members[0][0] &&
+                    <Button disabled='true' size="small">Join Room</Button>
+          }
         </div>
         }
         {props.cardInfo.members.length === 0 &&

@@ -34,21 +34,19 @@ function UserRoom() {
       }
       {userRoom && userRoom.length && userRoom[0].members.length>0 &&
         <Container width="100%" className='filter-container'>
-          <Paper elevation={24} className='filter-main-paper'>
-            <br/>
-            <div>
-              <h2> {userRoom[0].userName + '\'s' } Room</h2>
-            </div>
-            <br/>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
-              {userRoom[0].members.length>0 && userRoom[0].members.map( (listing, index)=>{
-                return (
-                  <Paper key={index} elevation={24}>
-                    <MemberCard cardInfo = {userRoom[0]} member = {listing}/>
-                  </Paper> );
-              } )}
-            </Box>
-          </Paper>
+          <br/>
+          <div>
+            <h2> {userRoom[0].userName + '\'s' } Room</h2>
+          </div>
+          <br/>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '100px', justifyContent: 'space-around' }}>
+            {userRoom[0].members.length>0 && userRoom[0].members.map( (listing, index)=>{
+              return (
+                <Paper key={index} elevation={24}>
+                  <MemberCard cardInfo = {userRoom[0]} member = {listing}/>
+                </Paper> );
+            } )}
+          </Box>
         </Container>
       }
     </div>

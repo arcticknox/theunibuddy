@@ -183,9 +183,11 @@ function MemberCard(props) {
               </Typography>
             </Box>
           </Modal>
-          {props.member[0] !== props.cardInfo.members[0][0] && <Button onClick={()=>{
+          {userInfo.name !== props.cardInfo.members[0][0] && <Button onClick={()=>{
             sendRequest();
-          }} size="small">Request</Button>}
+          }} size="small">Join Room</Button>}
+
+          {userInfo.name === props.cardInfo.members[0][0] && <Button disabled='true' size="small">Join Room</Button>}
         </CardActions>
       }
     </Card>
