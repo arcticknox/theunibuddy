@@ -27,6 +27,10 @@ const inviteSchema = mongoose.Schema(
         type: Boolean,
         default: false,
       },
+      join: {
+        type: Boolean,
+        default: true,
+      },
     },
     {
       timestamps: true,

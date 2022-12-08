@@ -38,6 +38,7 @@ const getAllRecievedInvites = async (userId, type) => {
         status: _.get(invite, 'status'),
         createdAt: _.get(invite, 'createdAt'),
         updatedAt: _.get(invite, 'updatedAt'),
+        join: _.get(invite, 'join'),
       };
     }));
     return invitesResponse;
@@ -48,9 +49,10 @@ const getAllRecievedInvites = async (userId, type) => {
 
 /**
  * Send an invite
+ * sender joins
  */
 const sendInvite = async (sUser, inviteInfo) => {
-  const { rUserID, type } = inviteInfo;
+  const { rUserID, type, join } = inviteInfo;
   const { _id, name } = sUser;
   const user = await UserModel.findOne( { _id: rUserID, isDeleted: false } );
   const checkInvite = await InviteModel.find({ sUserID: _id, rUserID, type, isDeleted: false, status: 'pending' });
@@ -61,9 +63,11 @@ const sendInvite = async (sUser, inviteInfo) => {
 
   if ( ! _.isEmpty(user) ) {
     inviteInfo.sUserID = _id;
+    inviteInfo.join = join;
     const newInvite = await new InviteModel(inviteInfo);
     await sendMessageToClient(rUserID, 'notification', `${name} sent you a roommate invite`);
-    await sendRoomInvitationEmail(_.get(user, 'email'), name);
+    if (join) await sendRoomInvitationEmail(_.get(user, 'email'), name);
+    else await sendRoomInvitationEmail(_.get(sUser, 'email'), name);
     return newInvite.save();
   } else {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The recieving User does not exist`);
@@ -77,7 +81,8 @@ const acceptInvite = async (userId, inviteId) => {
   const user = await UserModel.findOne( { _id: userId, isDeleted: false } );
   if ( ! _.isEmpty(user) ) {
     const status = await InviteModel.findByIdAndUpdate({ _id: inviteId, rUserID: userId, isDeleted: false }, { $set: { status: 'accepted' } }, { new: true });
-    roomService.addMember(status.sUserID, userId );
+    if (status.join) await roomService.addMember(status.sUserID, userId );
+    else await roomService.addMember(userId, status.sUserID);
     return status;
   } else {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The User does not exist`);

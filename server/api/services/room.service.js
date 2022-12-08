@@ -168,6 +168,7 @@ const getListings = async (filter, pageNumber = 0, nPerPage = 10) => {
             );
           }
           return ({
+            _id: user._id,
             userName: name,
             roomDesc: desc,
             maxCount: maxCount,

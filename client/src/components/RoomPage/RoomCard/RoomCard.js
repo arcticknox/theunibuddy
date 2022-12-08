@@ -19,11 +19,12 @@ function RoomCard(props) {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   // Invite send api call
-  const sendRequest = async ()=>{
+  const sendRequest = async (flag = true)=>{
     const body = {
       sUserID: '',
-      rUserID: props.cardInfo.members[0][1],
+      rUserID: props.cardInfo._id,
       type: 'room',
+      join: flag,
     };
     await fetchAPI('/invite/send', 'POST', body, accessToken);
   };
@@ -76,7 +77,9 @@ function RoomCard(props) {
         }
         {props.cardInfo.members.length === 0 &&
         <div>
-          <Button size="small">Invite</Button>
+          <Button size="small" onClick={()=>{
+            sendRequest(false);
+          }}>Invite</Button>
         </div>
         }
       </CardActions>

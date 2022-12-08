@@ -19,6 +19,7 @@ const sendInvite = {
     sUserID: Joi.string().allow(null, ''),
     rUserID: Joi.string().required(),
     type: Joi.string().required(),
+    join: Joi.boolean().required(),
   }),
 };
 

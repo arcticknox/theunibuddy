@@ -10,7 +10,7 @@ import { removeFromReceivedList } from '../../../redux/slices/inviteSlice';
 function InvitationItem(props) {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken.token);
-  const { inviteInfo: { name, universityName, _id } } = props;
+  const { inviteInfo: { name, universityName, _id, join } } = props;
   // Accept Invite
   const acceptInvitationAPI = async () => {
     const response = await fetchAPI(`/invite/accept/${_id}`, 'PUT', { type: 'room' }, accessToken);
@@ -40,11 +40,21 @@ function InvitationItem(props) {
               await declineInvitationAPI();
             }}
             variant="text">Decline</Button>
-          <Button className='accept-button'
-            onClick={async () => {
-              await acceptInvitationAPI();
-            }}
-            variant="contained">Accept</Button>
+          {join &&
+                      <Button className='accept-button'
+                        onClick={async () => {
+                          await acceptInvitationAPI();
+                        }}
+                        variant="contained">Accept Request</Button>
+          }
+          {!join &&
+                <Button className='accept-button'
+                  onClick={async () => {
+                    await acceptInvitationAPI();
+                  }}
+                  variant="contained">Accept Invite</Button>
+          }
+
         </Box>
       </Box>
     </Paper>
