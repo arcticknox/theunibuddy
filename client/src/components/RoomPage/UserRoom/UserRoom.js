@@ -28,7 +28,7 @@ function UserRoom() {
     <div>
       {
         <div>
-          <CreateRoom cardInfo = {userRoom[0]} onChange = {getUserRoom}/>
+          {<CreateRoom cardInfo = {userRoom[0]} onChange = {getUserRoom}/>}
         </div>
       }
       {userRoom && userRoom.length && userRoom[0].members.length>0 &&

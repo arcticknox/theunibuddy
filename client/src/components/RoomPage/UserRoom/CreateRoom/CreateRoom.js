@@ -69,22 +69,16 @@ function CreateRoom(props) {
     };
     await fetchAPI('http://localhost:8080/room', 'POST', body, accessToken);
     setEditable(!editable);
+    getUserRoom();
   };
 
   const callRoomApi = async () => {
-    // userRoom[0]
     if (userRoom[0].members && userRoom[0].members.length > 0) {
       await updateRoom();
       props.onChange();
     } else {
       await createNewRoom();
     }
-    /*
-    if (props.cardInfo.members && props.cardInfo.members.length > 0) {
-      await updateRoom();
-      props.onChange();
-    }
-    */
   };
 
 

@@ -9,8 +9,9 @@ import fetchAPI from '../../../../utils/fetchAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { setUserInfo } from '../../../../redux/slices/userRoomSlice';
+import { setUserInfo, setUserRoom } from '../../../../redux/slices/userRoomSlice';
 import memberIcon from '../../RoomCard/memberIcon.png';
+
 
 function MemberCard(props) {
   const dispatch = useDispatch();
@@ -27,6 +28,13 @@ function MemberCard(props) {
       type: 'room',
     };
     await fetchAPI(`http://localhost:8080/room/kickMember/${props.member[1]}`, 'DELETE', body, accessToken);
+    getUserRoom();
+  };
+
+  const getUserRoom = async () => {
+    const response = await fetchAPI('http://localhost:8080/room/userRoom', 'GET', null, accessToken);
+    dispatch(setUserRoom(response.data));
+    return response;
   };
 
   const getUserInfo = async () =>{
