@@ -4,6 +4,7 @@ import _ from 'lodash';
 import AppError from '../utils/AppError.js';
 import httpStatus from 'http-status';
 import { sendMessageToClient } from '../../socket/connectionStore.js';
+import roomService from './room.service.js';
 
 /**
  * Get project invites
@@ -74,6 +75,7 @@ const acceptInvite = async (userId, inviteId) => {
   const user = await UserModel.findOne( { _id: userId, isDeleted: false } );
   if ( ! _.isEmpty(user) ) {
     const status = await InviteModel.findByIdAndUpdate({ _id: inviteId, rUserID: userId, isDeleted: false }, { $set: { status: 'accepted' } }, { new: true });
+    roomService.addMember(status.sUserID, userId );
     return status;
   } else {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The User does not exist`);

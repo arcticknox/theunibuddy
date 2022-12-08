@@ -65,12 +65,35 @@ const removeMember = catchAsync( async (req, res) => {
 });
 
 /**
- * Remove member from the room
+ * Get all the listings
  * @param {Object} req
  * @param {Object} res
  */
 const getListings = catchAsync(async (req, res) => {
-  const status = await RoomService.getListings();
+  const filter = req.query;
+  delete filter.pageNumber;
+  delete filter.nPerPage;
+  const listingInfo = await RoomService.getListings(filter, req.query.pageNumber, req.query.nPerPage);
+  responseHandler(res, listingInfo);
+});
+
+/**
+ * Get the user room
+ * @param {Object} req
+ * @param {Object} res
+ */
+const getUserRoom = catchAsync(async (req, res) => {
+  const userRoom = await RoomService.getUserRoom(req.user._id);
+  responseHandler(res, { userRoom });
+});
+
+const getUserRoomId = catchAsync( async (req, res) => {
+  const userRoom = await RoomService.getUserRoom(req.params.Id);
+  responseHandler(res, { userRoom });
+});
+
+const kickMember = catchAsync( async (req, res) => {
+  const status = await RoomService.removeMember(req.params.Id);
   responseHandler(res, { status });
 });
 
@@ -82,4 +105,7 @@ export default {
   addMember,
   removeMember,
   getListings,
+  getUserRoom,
+  getUserRoomId,
+  kickMember,
 };

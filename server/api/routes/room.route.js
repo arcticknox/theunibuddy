@@ -39,6 +39,16 @@ router.route('/listings').get(
     roomController.getListings,
 );
 
+router.route('/userRoom').get(
+    roomController.getUserRoom,
+);
+router.route('/userRoomId/:Id').get(
+    roomController.getUserRoomId,
+);
+router.route('/kickMember/:Id').delete(
+    roomController.kickMember,
+);
+
 export {
   router,
   path,

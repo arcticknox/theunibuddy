@@ -22,6 +22,7 @@ const loginWithEmail = catchAsync(async (req, res) => {
   } = req;
   const user = await AuthService.loginWithEmail(email, password);
   const tokens = await TokenService.generateAuthTokens(user._id);
+  console.log('tokens', tokens);
   responseHandler(res, { user, tokens });
 });
 

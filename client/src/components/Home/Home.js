@@ -2,12 +2,18 @@ import { Box } from '@mui/material';
 import * as React from 'react';
 import './Home.scss';
 import HomeTile from './HomeTile/HomeTile';
+import {
+  Link,
+} from 'react-router-dom';
 
 function Home() {
   return (
     <Box sx={{ flexGrow: 1, padding: '5%', display: 'flex',
       justifyContent: 'center', gap: '5%' }}>
-      <HomeTile title={'Roommate Finder'} type={'roommate'}/>
+      <Link to='/roommate' style={{ textDecoration: 'none' }} underline='none' color={'white'}>
+        <HomeTile title={'Roommate Finder'} type={'roommate'}/>
+      </Link>
+
       <HomeTile title={'Project Finder'} type={'project'}/>
       <HomeTile title={'Blogs'} type={'blogs'} />
     </Box>

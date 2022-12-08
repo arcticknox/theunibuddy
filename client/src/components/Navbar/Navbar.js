@@ -22,6 +22,8 @@ import AccountMenu from '../AccountMenu/AccountMenu';
 import ConnectWithoutContactIcon from
   '@mui/icons-material/ConnectWithoutContact';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import LivingIcon from '@mui/icons-material/Living';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import NotificationBell from '../NotificationBell/NotificationBell';
 
@@ -29,10 +31,20 @@ const drawerListData = [
   {
     name: 'Roommate Finder',
     icon: <ConnectWithoutContactIcon fontSize='medium'/>,
+    path: '/roommate',
+  },
+  {
+    name: 'My Room',
+    icon: <LivingIcon fontSize='medium' />,
+    path: '/user-room',
   },
   {
     name: 'Project Finder',
     icon: <PeopleAltIcon fontSize='medium' />,
+  },
+  {
+    name: 'Project',
+    icon: <EngineeringIcon fontSize='medium' />,
   },
   {
     name: 'Invitations',
@@ -88,10 +100,12 @@ function Navbar(props) {
           <List>
             {drawerListData.map((item, index) => (
               <ListItem key={index} disablePadding>
-                <ListItemButton href={item.path}>
-                  <ListItemIcon>
-                    {item.icon}
-                  </ListItemIcon>
+                <ListItemButton>
+                  <Link href={item.path} underline='none' color={'white'}>
+                    <ListItemIcon>
+                      {item.icon}
+                    </ListItemIcon>
+                  </Link>
                   <ListItemText primary={item.name} />
                 </ListItemButton>
               </ListItem>

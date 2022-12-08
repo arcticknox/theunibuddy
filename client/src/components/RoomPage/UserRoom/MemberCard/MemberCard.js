@@ -1,0 +1,135 @@
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import BoyAvatar from '../../RoomCard/boyAvatar.png';
+import fetchAPI from '../../../../utils/fetchAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import { setUserInfo } from '../../../../redux/slices/userRoomSlice';
+
+function MemberCard(props) {
+  const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const accessToken = useSelector((state) => state.auth.accessToken.token);
+  const userInfo = useSelector((state) => state.userRoom.userInfo );
+  const removeUser = async ()=>{
+    const body = {
+      sUserID: '',
+      rUserID: props.cardInfo.members[0][1],
+      type: 'room',
+    };
+    await fetchAPI(`http://localhost:8080/room/kickMember/${props.member[1]}`, 'DELETE', body, accessToken);
+  };
+
+  const getUserInfo = async () =>{
+    const response = await fetchAPI(`http://localhost:8080/user/${props.member[1]}`, 'GET', null, accessToken);
+    dispatch(setUserInfo(response));
+    handleOpen();
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+  return (
+    <Card sx={{ width: 300, height: 300 }}>
+      <CardMedia
+        component="img"
+        alt="listing card"
+        height="140"
+        width="100"
+        image={BoyAvatar}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {props.member[0]}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Room Bio: {props.cardInfo.roomDesc !== ''? props.cardInfo.roomDesc : 'No Details'}
+          <div>
+            {props.cardInfo.members.length > 0 &&
+                <div>
+                    Max Roomate: {props.cardInfo.maxCount}
+                </div>
+            }
+            {props.cardInfo.members.length === 0 &&
+                <div>
+                    Room does not exist
+                </div>
+            }
+
+          </div>
+
+        </Typography>
+      </CardContent>
+      {
+        props.type !== 'read' &&
+      <CardActions>
+        {props.cardInfo.members.length > 0 &&
+        <div>
+          <Button onClick={()=>{
+            getUserInfo();
+          }} size="small">View Profile</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {userInfo.name}
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Email: {userInfo.email}
+              </Typography>
+            </Box>
+          </Modal>
+          {props.member[0]=== props.cardInfo.members[0][0] &&
+                    <Button onClick={()=>{
+                      removeUser();
+                    }} size="small">Leave</Button>
+          }
+          {
+            props.member[0] !== props.cardInfo.members[0][0] &&
+          <Button onClick={()=>{
+            removeUser();
+          }} size="small">Remove</Button>
+          }
+
+        </div>
+        }
+        {props.cardInfo.members.length === 0 &&
+        <div>
+          <Button size="small">Invite</Button>
+        </div>
+        }
+      </CardActions>
+      }
+      {
+        props.type === 'read' &&
+        <CardActions>
+          <Button onClick={()=>{
+            sendRequest();
+          }} size="small">Request</Button>
+        </CardActions>
+      }
+    </Card>
+  );
+}
+export default MemberCard;

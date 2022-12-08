@@ -86,7 +86,7 @@ const addMember = async (memberId, userId) => {
       if (memberRoom.members.length === 1) {
         deleteRoom(memberRoom._id);
       } else {
-        await RoomModel.updateOne({ _id: room._id, isDeleted: false }, { $pull: { members: memberId } } );
+        await RoomModel.updateOne({ _id: memberRoom._id, isDeleted: false }, { $pull: { members: memberId } } );
       }
     }
   } else {
@@ -130,11 +130,66 @@ const removeMember = async (userId) => {
  * Get all the listings
  * @param {String} userId
  */
-const getListings = async () => {
-  const userList = await UserModel.find({ isDeleted: false });
-  if (! _.isEmpty(user)) {
+const getListings = async (filter, pageNumber = 0, nPerPage = 10) => {
+  const findBy = { isDeleted: false, isEmailVerified: true };
+  if (!_.isEmpty(filter)) {
+    filter = _.omitBy(filter, _.isEmpty);
+    filter = _.omitBy(filter, (key, value)=> key === 'undefined');
+    console.log(filter);
+    const filterKeys = _.keys(filter);
+    _.map(filterKeys, (key)=>{
+      switch (key) {
+        case 'rentBudgetLimit':
+          findBy[key] = { $lt: filter[key] };
+          break;
+        default:
+          findBy[key] = filter[key];
+      }
+    });
+  }
+  console.log(findBy);
+  const userList = await UserModel.find(findBy).sort({ _id: 1 }).skip(pageNumber > 0 ? ( ( pageNumber - 1 ) * nPerPage ) : 0 ).limit( nPerPage );
+  const total = userList.length;
+  if (! _.isEmpty(userList)) {
     const listingData = await Promise.all(
         userList.map(async (user)=>{
+          const name = user._doc.name;
+          const room = await RoomModel.findOne( { members: user._doc._id, isDeleted: false } );
+          let desc = '';
+          let maxCount = 0;
+          let roommates = [];
+          if (room !== null) {
+            desc = room._doc.details;
+            maxCount = room._doc.maxCount;
+            roommates = await Promise.all(
+                room._doc.members.map(async (user) =>{
+                  const userObj = await UserModel.findOne( { _id: user, isDeleted: false } );
+                  return [userObj._doc.name, userObj._doc._id];
+                }),
+            );
+          }
+          return ({
+            userName: name,
+            roomDesc: desc,
+            maxCount: maxCount,
+            members: [...roommates],
+          });
+        }),
+    );
+    return {
+      listingData: listingData.length ? listingData : {},
+      pageNumber,
+      nPerPage,
+      total,
+    };
+  }
+};
+
+const getUserRoom = async (userId) => {
+  const userData = await UserModel.find({ _id: userId, isDeleted: false });
+  if (! _.isEmpty(userData)) {
+    const listingData = await Promise.all(
+        userData.map(async (user)=>{
           const name = user._doc.name;
           const room = await RoomModel.findOne( { members: user._doc._id, isDeleted: false } );
           let desc = '';
@@ -171,4 +226,5 @@ export default {
   addMember,
   removeMember,
   getListings,
+  getUserRoom,
 };

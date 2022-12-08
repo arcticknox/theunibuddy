@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from '../slices/authSlice';
+import listingSlice from '../slices/listingSlice';
+import userRoomSlice from '../slices/userRoomSlice';
 import inviteSlice from '../slices/inviteSlice';
 import notificationSlice from '../slices/notificationSlice';
 import storage from 'redux-persist/lib/storage';
@@ -9,6 +11,8 @@ import { persistReducer,
 
 const reducers = combineReducers({
   auth: authSlice,
+  listing: listingSlice,
+  userRoom: userRoomSlice,
   invite: inviteSlice,
   notification: notificationSlice,
 });
