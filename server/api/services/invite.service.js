@@ -5,6 +5,7 @@ import AppError from '../utils/AppError.js';
 import httpStatus from 'http-status';
 import { sendMessageToClient } from '../../socket/connectionStore.js';
 import roomService from './room.service.js';
+import { sendRoomInvitationEmail } from './email.service.js';
 
 /**
  * Get project invites
@@ -62,6 +63,7 @@ const sendInvite = async (sUser, inviteInfo) => {
     inviteInfo.sUserID = _id;
     const newInvite = await new InviteModel(inviteInfo);
     await sendMessageToClient(rUserID, 'notification', `${name} sent you a roommate invite`);
+    await sendRoomInvitationEmail(_.get(user, 'email'), name);
     return newInvite.save();
   } else {
     throw new AppError(httpStatus.BAD_REQUEST, `Error: The recieving User does not exist`);

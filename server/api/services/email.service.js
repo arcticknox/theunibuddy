@@ -44,7 +44,7 @@ const sendVerificationEmail = async (to, token) => {
 };
 
 /**
- *
+ * OTP email
  * @param {String} to email recepient
  * @param {Number} otp otp to verify authenticity if user claim
  */
@@ -55,8 +55,21 @@ const sendOtpEmail = async (to, otp) => {
   await sendEmail(to, subject, text);
 };
 
+/**
+ * Roommate invite email
+ * @param {String} to
+ * @param {String} userName
+ */
+const sendRoomInvitationEmail = async (to, userName) => {
+  const subject = 'UniBuddy - Roommate Invite';
+  const text = `Dear user,
+  ${userName} has sent a request to join your room. Log in to unibuddy.com to accept the request.`;
+  await sendEmail(to, subject, text);
+};
+
 export {
   sendEmail,
   sendVerificationEmail,
   sendOtpEmail,
+  sendRoomInvitationEmail,
 };
