@@ -4,6 +4,7 @@ import listingSlice from '../slices/listingSlice';
 import userRoomSlice from '../slices/userRoomSlice';
 import inviteSlice from '../slices/inviteSlice';
 import notificationSlice from '../slices/notificationSlice';
+import blogSlice from '../slices/blogSlice';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   userRoom: userRoomSlice,
   invite: inviteSlice,
   notification: notificationSlice,
+  blogListing: blogSlice,
 });
 
 const persistConfig = {

@@ -29,9 +29,10 @@ function ProfilePage() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src="https://img.icons8.com/fluency/96/null/user-male-circle.png"
                   alt="avatar"
                   className="rounded-circle"
+                  style={{ width: '100px' }}
                   fluid />
                 <p className="text-muted mb-1">{userInfo.name}</p>
                 <p className="text-muted mb-4">{userInfo.country}</p>
@@ -88,8 +89,8 @@ function ProfilePage() {
                     <MDBCardText>Rent Budget Limit</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">$
-                      {userInfo.rentBudgetLimit}</MDBCardText>
+                    <MDBCardText className="text-muted">
+                      {userInfo.rentBudgetLimit ? `$${userInfo.rentBudgetLimit}` : null}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -119,8 +120,8 @@ function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {new Date(userInfo.moveInDate)
-                          .toLocaleDateString('en-US', options)}
+                      {userInfo.moveInDate ? new Date(userInfo.moveInDate)
+                          .toLocaleDateString('en-US', options) : null }
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -131,8 +132,8 @@ function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {new Date(userInfo.dob).
-                          toLocaleDateString('en-US', options)}
+                      {userInfo.dob ? new Date(userInfo.dob).
+                          toLocaleDateString('en-US', options) : null}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>

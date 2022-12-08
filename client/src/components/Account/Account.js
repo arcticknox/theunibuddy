@@ -65,6 +65,7 @@ function Account() {
       intake: values.intake,
       studyLevel: values.studyLevel,
       contactPreference: values.contactPreference,
+      country: values.country,
       linkedIn: values.linkedIn,
     };
     if (values.password !== '') body.password = values.password;
@@ -235,7 +236,7 @@ function Account() {
             <DesktopDatePicker
               label="Approx. Move-In Date"
               inputFormat="MM/DD/YYYY"
-              value={new Date(values.moveInDate)}
+              value={values.moveInDate ? new Date(values.moveInDate) : null}
               onChange={handleMoveInChange}
               disabled={editable}
               inputProps={{ min: 0, style: { textAlign: 'center' } }}
@@ -249,7 +250,7 @@ function Account() {
             <DesktopDatePicker
               label="Date of Birth"
               inputFormat="MM/DD/YYYY"
-              value={new Date(values.dob)}
+              value={values.dob ? new Date(values.dob) : null}
               onChange={handleDOBChange}
               disabled={editable}
               inputProps={{ min: 0, style: { textAlign: 'center' } }}
@@ -343,6 +344,17 @@ function Account() {
           </FormControl>
         </div>
         <div>
+          <TextField
+            label="Country"
+            id="login-email-textfield"
+            inputProps={{ min: 0, style: { textAlign: 'center' } }}
+            sx={{ m: 1, width: '40ch' }}
+            value={values.country}
+            onChange={handleChange('country')}
+            disabled={editable}
+          />
+          {/* </div>
+        <div> */}
           <TextField
             label="LinkedIn"
             id="login-email-textfield"

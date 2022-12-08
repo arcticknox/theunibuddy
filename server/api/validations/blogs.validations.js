@@ -4,7 +4,7 @@ const createBlog = {
   body: Joi.object().keys({
     title: Joi.string().required(),
     content: Joi.string().required(),
-    userName: Joi.string().required(),
+    userId: Joi.string().required(),
   }),
 };
 

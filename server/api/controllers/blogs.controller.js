@@ -20,8 +20,8 @@ const createBlog = catchAsync(async (req, res) => {
  * @param {Object} res
  */
 const getBlog = catchAsync(async (req, res) => {
-  const status = await BlogService.getBlog();
-  responseHandler(res, { status });
+  const blogs = await BlogService.getBlogs();
+  responseHandler(res, { blogs });
 });
 
 /**

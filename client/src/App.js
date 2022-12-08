@@ -12,6 +12,7 @@ import Invitations from './components/Invitations/Invitations';
 import Profile from './components/Profile/Profile';
 import Account from './components/Account/Account';
 import ViewRoom from './components/RoomPage/ViewRoom/ViewRoom';
+import Blogs from './components/Blogs/Blogs';
 import {
   Route,
   BrowserRouter,
@@ -34,6 +35,7 @@ function App() {
           <Route element={<SignUp />} path={'/signup'}></Route>
           <Route element={<PasswordReset />} path={'/passwordreset'}></Route>
           <Route element={<PrivateRoute><RoomPage /></PrivateRoute>} path={'/roommate'}></Route>
+          <Route element={<PrivateRoute><Blogs /></PrivateRoute>} path={'/blogs'}></Route>
           <Route element={<Home />} path={'/home'}></Route>
           <Route element={<UserRoom />} path={'/user-room'}></Route>
           <Route element={<ViewRoom />} path={'/view-room'}></Route>

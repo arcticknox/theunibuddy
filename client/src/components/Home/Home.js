@@ -15,7 +15,9 @@ function Home() {
       </Link>
 
       <HomeTile title={'Project Finder'} type={'project'}/>
-      <HomeTile title={'Blogs'} type={'blogs'} />
+      <Link to='/blogs' style={{ textDecoration: 'none' }} underline='none' color={'white'}>
+        <HomeTile title={'Blogs'} type={'blogs'} />
+      </Link>
     </Box>
   );
 }
