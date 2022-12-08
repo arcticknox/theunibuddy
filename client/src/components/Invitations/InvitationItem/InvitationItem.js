@@ -6,6 +6,7 @@ import * as React from 'react';
 import fetchAPI from '../../../utils/fetchAPI';
 import { removeFromReceivedList } from '../../../redux/slices/inviteSlice';
 
+// Invitation Item component
 function InvitationItem(props) {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken.token);

@@ -16,7 +16,7 @@ import fetchAPI from '../../utils/fetchAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/slices/authSlice';
 
-
+// Account Menu component
 function AccountMenu() {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -46,6 +46,7 @@ function AccountMenu() {
     }
   }
 
+  // User logout api call
   const logoutUserAPI = async () => {
     await fetchAPI('http://localhost:8080/auth/logout', 'POST', { refreshToken }, accessToken);
     dispatch(logoutUser());

@@ -9,16 +9,19 @@ import { setReceivedList,
   resetReceivedList } from '../../redux/slices/inviteSlice';
 import InvitationItem from './InvitationItem/InvitationItem';
 
+// Invitations component
 function Invitations() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const receivedList = useSelector((state) => state.invite.receivedList);
 
+  // Fetch received invitations api call
   const fetchInvitations = async () => {
     const response = await fetchAPI('http://localhost:8080/invite/recieved/room', 'GET', null, accessToken);
     return _.get(response, 'data.invites');
   };
 
+  // Fetch invitations on mount
   useEffect(() => {
     fetchInvitations().then((items) => {
       dispatch(setReceivedList(items));

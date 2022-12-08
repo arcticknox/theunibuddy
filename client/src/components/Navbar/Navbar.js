@@ -55,7 +55,8 @@ const drawerListData = [
   },
 ];
 
-function Navbar(props) {
+// Navbar component
+function Navbar() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [drawerState, setDrawerState] = useState(false);
 
@@ -77,6 +78,7 @@ function Navbar(props) {
             sx={{ flexGrow: 1 }}>
             <Link href='/' underline='none' color={'white'}>UniBuddy</Link>
           </Typography>
+          {/* Show account and notifications only on sign in */}
           {isLoggedIn ?
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '20%' }}>
                   <Box>

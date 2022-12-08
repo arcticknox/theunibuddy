@@ -10,6 +10,7 @@ import fetchAPI from '../../utils/fetchAPI';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useState } from 'react';
 
+// Signup component
 function SignUp() {
   const [values, setValues] = useState({
     name: '',
@@ -19,6 +20,7 @@ function SignUp() {
     hasRegistered: false,
   });
 
+  // Sign up user api call
   const signUpUserAPI = async () => {
     const body = {
       name: values.name,

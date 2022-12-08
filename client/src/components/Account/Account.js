@@ -14,6 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useState } from 'react';
 
+// Account component
 function Account() {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const accessToken = useSelector((state) => state.auth.accessToken);

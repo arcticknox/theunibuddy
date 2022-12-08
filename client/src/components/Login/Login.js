@@ -11,6 +11,7 @@ import { setAuthInfo, setIsLoggedIn } from '../../redux/slices/authSlice';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useState } from 'react';
 
+// Login component
 function Login() {
   const [values, setValues] = useState({
     email: '',
@@ -21,6 +22,7 @@ function Login() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
+  // Login api call and dispatches
   const loginUserAPI = async () => {
     const body = {
       email: values.email,

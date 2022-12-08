@@ -10,7 +10,7 @@ import { setNotificationList,
   resetNotificationList } from '../../redux/slices/notificationSlice';
 import NotificationItems from './NotificationItems/NotificationItems';
 
-
+// Notification Bell component
 function NotificationBell() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -36,15 +36,18 @@ function NotificationBell() {
     return;
   };
 
+  // Subscribe socket connection
   useEffect(() => {
     const socketConn = io(`http://${window.location.hostname}:8080`);
     subscribeSocket(userInfo, socketConn, accessToken);
+    // Listen for notification event sent from server
     socketConn.on('notification', (payload) => {
       setNewNotification(true);
       // Update notification list in redux
       dispatch(setNotificationList(payload));
     } );
     return () => {
+      // Cleanup socket connection on unmount
       socketConn.close();
     };
   }, []);
@@ -65,7 +68,6 @@ function NotificationBell() {
 
   return (
     <div>
-
       <Badge color="success"
         variant="dot" overlap="circular" invisible={!newNotification}>
         <IconButton onClick={handleToggle} color='inherit'>
