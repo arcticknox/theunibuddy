@@ -109,12 +109,12 @@ function Navbar(props) {
             {drawerListData.map((item, index) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton>
-                  <Link href={item.path} underline='none' color={'white'}>
+                  <Link href={item.path} underline='none' color={'white'} sx={{ display: 'flex' }}>
                     <ListItemIcon>
                       {item.icon}
                     </ListItemIcon>
+                    <ListItemText primary={item.name} />
                   </Link>
-                  <ListItemText primary={item.name} />
                 </ListItemButton>
               </ListItem>
             ))}
