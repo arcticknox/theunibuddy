@@ -22,6 +22,7 @@ function MemberCard(props) {
   const handleClose = () => setOpen(false);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const userInfo = useSelector((state) => state.userRoom.userInfo );
+  const loggedUserInfo = useSelector((state) => state.auth.userInfo );
   // Remove user api call
   const removeUser = async () => {
     const body = {
@@ -31,6 +32,16 @@ function MemberCard(props) {
     };
     await fetchAPI(`/room/kickMember/${props.member[1]}`, 'DELETE', body, accessToken);
     getUserRoom();
+  };
+
+  // Invite send api call
+  const sendRequest = async ()=>{
+    const body = {
+      sUserID: '',
+      rUserID: props.cardInfo.members[0][1],
+      type: 'room',
+    };
+    await fetchAPI('/invite/send', 'POST', body, accessToken);
   };
 
   // Get user room api call
@@ -127,13 +138,14 @@ function MemberCard(props) {
               <Button variant="outlined" >View Details</Button>
             </Box>
           </Modal>
-          {props.member[0]=== props.cardInfo.members[0][0] &&
+          {console.log(props.member, userInfo.name, loggedUserInfo.name)}
+          {props.member[0]=== loggedUserInfo.name &&
                     <Button onClick={()=>{
                       removeUser();
                     }} size="small">Leave</Button>
           }
           {
-            props.member[0] !== props.cardInfo.members[0][0] &&
+            props.member[0] !== loggedUserInfo.name &&
           <Button onClick={()=>{
             removeUser();
           }} size="small">Remove</Button>
@@ -183,11 +195,11 @@ function MemberCard(props) {
               </Typography>
             </Box>
           </Modal>
-          {userInfo.name !== props.cardInfo.members[0][0] && <Button onClick={()=>{
+          {loggedUserInfo.name !== props.cardInfo.members[0][0] && <Button onClick={()=>{
             sendRequest();
           }} size="small">Join Room</Button>}
 
-          {userInfo.name === props.cardInfo.members[0][0] && <Button disabled='true' size="small">Join Room</Button>}
+          {loggedUserInfo.name === props.cardInfo.members[0][0] && <Button disabled='true' size="small">Join Room</Button>}
         </CardActions>
       }
     </Card>
