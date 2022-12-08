@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import BoyAvatar from './boyAvatar.png';
+import memberIcon from './memberIcon.png';
 import fetchAPI from '../../../utils/fetchAPI';
 import { useSelector } from 'react-redux';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'react-router-dom';
 
 function RoomCard(props) {
+  const [avatarElevation, setAvatarElevation] = useState(4);
   const accessToken = useSelector((state) => state.auth.accessToken.token);
   const sendRequest = async ()=>{
     const body = {
@@ -25,13 +26,14 @@ function RoomCard(props) {
   };
 
   return (
-    <Card sx={{ width: 300, height: 300 }}>
-      <CardMedia
-        component="img"
+    <Card sx={{ width: 300, height: 300, padding: '5%' }} elevation={avatarElevation}
+      onMouseOver={ () => setAvatarElevation(24) }
+      onMouseOut={() => setAvatarElevation(4)}>
+      <img
         alt="listing card"
-        height="140"
-        width="100"
-        image={BoyAvatar}
+        width='40%'
+        src={memberIcon}
+
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -40,7 +42,6 @@ function RoomCard(props) {
         <Typography variant="body2" color="text.secondary" align='left'>
           Room Bio: {props.cardInfo.roomDesc !== ''? props.cardInfo.roomDesc : 'No Details'}
           <div>
-            {console.log('***********', props.cardInfo)}
             {props.cardInfo.members.length > 0 &&
                 <div>
                     Spots Left: {props.cardInfo.maxCount - props.cardInfo.members.length}

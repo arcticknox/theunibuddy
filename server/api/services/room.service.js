@@ -131,7 +131,7 @@ const removeMember = async (userId) => {
  * @param {String} userId
  */
 const getListings = async (filter, pageNumber = 0, nPerPage = 10) => {
-  const findBy = { isDeleted: false, isEmailVerified: true };
+  const findBy = { isDeleted: false };
   if (!_.isEmpty(filter)) {
     filter = _.omitBy(filter, _.isEmpty);
     filter = _.omitBy(filter, (key, value)=> key === 'undefined');
