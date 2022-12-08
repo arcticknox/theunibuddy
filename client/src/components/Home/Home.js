@@ -14,7 +14,7 @@ function Home() {
         <HomeTile title={'Roommate Finder'} type={'roommate'}/>
       </Link>
 
-      <HomeTile title={'Project Finder'} type={'project'}/>
+      {/* <HomeTile title={'Project Finder'} type={'project'}/> */}
       <Link to='/blogs' style={{ textDecoration: 'none' }} underline='none' color={'white'}>
         <HomeTile title={'Blogs'} type={'blogs'} />
       </Link>

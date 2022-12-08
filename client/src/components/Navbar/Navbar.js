@@ -22,9 +22,9 @@ import { useSelector } from 'react-redux';
 import AccountMenu from '../AccountMenu/AccountMenu';
 import ConnectWithoutContactIcon from
   '@mui/icons-material/ConnectWithoutContact';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+// import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LivingIcon from '@mui/icons-material/Living';
-import EngineeringIcon from '@mui/icons-material/Engineering';
+// import EngineeringIcon from '@mui/icons-material/Engineering';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import NotificationBell from '../NotificationBell/NotificationBell';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -40,14 +40,14 @@ const drawerListData = [
     icon: <LivingIcon fontSize='medium' />,
     path: '/user-room',
   },
-  {
-    name: 'Project Finder',
-    icon: <PeopleAltIcon fontSize='medium' />,
-  },
-  {
-    name: 'Project',
-    icon: <EngineeringIcon fontSize='medium' />,
-  },
+  // {
+  //   name: 'Project Finder',
+  //   icon: <PeopleAltIcon fontSize='medium' />,
+  // },
+  // {
+  //   name: 'Project',
+  //   icon: <EngineeringIcon fontSize='medium' />,
+  // },
   {
     name: 'Invitations',
     icon: <GroupAddIcon fontSize='medium' />,
@@ -72,7 +72,7 @@ function Navbar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon onClick={() => setDrawerState(true)} />
+            {isLoggedIn && <MenuIcon onClick={() => setDrawerState(true)} />}
           </IconButton>
           <Typography variant="h6" component="div"
             sx={{ flexGrow: 1 }}>
@@ -92,7 +92,7 @@ function Navbar() {
           </Button>}
         </Toolbar>
       </AppBar>
-      <Drawer
+      {isLoggedIn && <Drawer
         anchor={'left'}
         open={drawerState}
         onClose={() => setDrawerState(false)}
@@ -122,7 +122,7 @@ function Navbar() {
             ))}
           </List>
         </Box>
-      </Drawer>
+      </Drawer>}
     </Box>
   );
 }
