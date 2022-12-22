@@ -8,7 +8,7 @@ import { socketConnectionStore } from './socket/connectionStore.js';
 import http from 'http';
 
 const httpServer = http.createServer(app);
-
+// Init socket
 const io = initSocketServer(httpServer);
 
 const initMongoConn = () => {
