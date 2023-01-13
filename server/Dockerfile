@@ -1,4 +1,4 @@
-FROM node:18.12.1-slim
+FROM --platform=linux/amd64 node:18.12.1-slim
 ENV NODE_ENV=production
 EXPOSE 8080
 RUN mkdir /app && chown -R node:node /app
