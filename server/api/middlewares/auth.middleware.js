@@ -18,7 +18,7 @@ const verifyCallback = (req, resolve, reject) => async (err, user, info) => {
 const authMiddleware= (req, res, next) => {
   new Promise((resolve, reject) => {
     _.find(config.authMiddleware.ignoreList, (str) => {
-      if (str === req.originalUrl.slice(1)) {
+      if (str === (req.originalUrl.slice(1)).split('?')[0]) {
         return resolve();
       }
     });
